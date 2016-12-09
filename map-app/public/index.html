@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org/" ng-app="appMaps">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Dynamic GPS Maps</title>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/angular.js"></script>
+    <script src="js/lodash.js"></script>
+    <script src="js/angular-simple-logger.js"></script>
+    <script src="js/angular-google-maps.js?key=AIzaSyDPwOsXQHklBAmpvQ53J6AS_vq7JpMIx_U&"></script>
+    <script type='text/javascript' src='script.js'></script><!--script-->
+    
+</head>
+
+<body>
+
+<div id="map_canvas" ng-controller="mainCtrl">
+    <ui-gmap-google-map 
+    	center="map.center" 
+    	zoom="map.zoom" 
+    	draggable="true" 
+    	options="options" 
+    	bounds="map.bounds"
+    	events="mapEvents">
+    	
+<!--     	<ui-gmap-search-box template="searchbox.template" events="searchbox.events" position="BOTTOM_RIGHT"></ui-gmap-search-box> -->
+
+		<ui-gmap-marker coords="marker0.coords" options="marker0.options" events="marker0.events" idkey="marker0.id">
+		<ui-gmap-marker coords="marker1.coords" options="marker1.options" events="marker1.events" idkey="marker1.id">
+    	
+<!--         <ui-gmap-polyline  -->
+<!--         	path="polyline.path"  -->
+<!--         	stroke="polyline.stroke"  -->
+<!--         	visible='polyline.visible' -->
+<!--             geodesic='polyline.geodesic'  -->
+<!--             fit="false"  -->
+<!--             editable="polyline.editable"  -->
+<!--             draggable="polyline.draggable"  -->
+<!--             icons='polyline.icons' -->
+<!--             events="polyline.events"> -->
+<!--          </ui-gmap-polyline> -->
+    </ui-gmap-google-map>
+
+
+<!--     This section is for controls -->
+	<div class="grid">
+    	<form name="movementForm">    
+		    <div layout-gt-sm="row" class="layout-gt-sm-row">
+		        <md-input-container class="md-block">
+		            <label class="mlabel">Speed</label>
+		            <input class="minput" name="speed" ng-model="moveControl.speed" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+		        </md-input-container>
+		        		    	
+		    	<md-input-container class="md-block">
+					<label class="mlabel">Pause</label>
+		            <input class="minput" name="pause" ng-model="moveControl.pause" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+		        </md-input-container>
+		        
+		        <button class="mbutton" ng-click="startMoving()">GO</button>
+		        <button class="mbuttonRed" ng-click="stopMoving()">STOP</button>
+	        </div>
+		</form>
+	</div>    
+
+</div>
+</body>
+
+</html>
+		

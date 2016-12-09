@@ -1,0 +1,61 @@
+/* style file */
+html, body, #map_canvas {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+}
+
+#map_canvas {
+    position: relative;
+}
+
+.angular-google-map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.grid {
+	width: 350px;
+	height: 30px;
+	background-color: rgba(210, 130, 240, 0.3) !important;
+	position: absolute; 
+	top: 10px; left: 300px; 
+	z-index: 99;
+	text-align: center;
+}
+
+.md-block{
+	margin-top:3px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.minput{
+	width: 30px;
+	font-family: serif;
+}
+
+.mlabel{
+	font-style: normal;
+}
+
+.mbutton{
+	width: 50px;
+	font-family: sans-serif;
+	font-weight: bold;
+	margin-left:10px;
+    margin-right:10px;
+}
+
+.mbuttonRed{
+	width: 50px;
+	font-family: sans-serif;
+	font-weight: bold;
+	color:red;
+	margin-left:10px;
+    margin-right:10px;
+}
+
