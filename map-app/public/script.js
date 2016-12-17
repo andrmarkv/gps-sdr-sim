@@ -124,4 +124,11 @@ angular.module('appMaps', [ 'uiGmapgoogle-maps' ]).config(
 	$scope.stopMoving = function() {
 		socket.emit('stopMoving', {});
 	};
+	
+	$scope.moveMarker = function() {
+		$scope.marker0.coords.latitude = $scope.marker1.coords.latitude;
+		$scope.marker0.coords.longitude = $scope.marker1.coords.longitude;
+		$scope.marker1.coords.latitude = $scope.marker1.coords.latitude + 0.00001;
+		$scope.marker1.coords.longitude = $scope.marker1.coords.longitude + 0.00001;
+	};
 });

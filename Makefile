@@ -13,6 +13,7 @@ gps-sdr-sim: gpssim.o
 
 clean:
 	rm -f gpssim.o gps-sdr-sim *.bin
+#	mkfifo gpssim.bin
 
 time: gps-sdr-sim
 	time ./gps-sdr-sim -e brdc3540.14n -u circle.csv -b 1

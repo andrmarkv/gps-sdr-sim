@@ -52,16 +52,17 @@
 		    <div layout-gt-sm="row" class="layout-gt-sm-row">
 		        <md-input-container class="md-block">
 		            <label class="mlabel">Speed</label>
-		            <input class="minput" name="speed" ng-model="moveControl.speed" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+		            <input class="minput" name="speed" ng-model="moveControl.speed" required md-maxlength="5">
 		        </md-input-container>
 		        		    	
 		    	<md-input-container class="md-block">
 					<label class="mlabel">Pause</label>
-		            <input class="minput" name="pause" ng-model="moveControl.pause" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+		            <input class="minput" name="pause" ng-model="moveControl.pause" required md-maxlength="5">
 		        </md-input-container>
 		        
 		        <button class="mbutton" ng-click="startMoving()">GO</button>
 		        <button class="mbuttonRed" ng-click="stopMoving()">STOP</button>
+		        <button class="mbuttonRed" ng-click="moveMarker()">JOIN</button>
 	        </div>
 		</form>
 	</div>    
