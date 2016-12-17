@@ -2036,10 +2036,10 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-//	if (fcntl(fileno(fp), F_SETPIPE_SZ, 1024 * 1024) < 0)
-//	{
-//		printf("WARNING: pipe size failed.\n");
-//	}
+	if (fcntl(fileno(fp), F_SETPIPE_SZ, 1024 * 1024) < 0)
+	{
+		printf("WARNING: pipe size failed.\n");
+	}
 
 	////////////////////////////////////////////////////////////
 	// Initialize channels
@@ -2074,7 +2074,6 @@ int main(int argc, char *argv[])
 	// Generate baseband signals
 	////////////////////////////////////////////////////////////
 
-	tstart = clock();
 
 	// Allocate visible satellites
 	double llh[3] = {24.506449, 54.372192, 111};
@@ -2095,14 +2094,17 @@ int main(int argc, char *argv[])
 		llh[0], llh[1], llh[2], xyz[0], xyz[1], xyz[2]);
 	igrx = 0;
 
+	tstart = clock();
+
 	// Update receiver time
 	grx = incGpsTime(grx, 0.1);
 
-	//t_motion *motion = NULL; //Motion start (needed to free resources later)
-	//t_motion *motion_current = NULL; //Current location
+	t_motion *motion = NULL; //Motion start (needed to free resources later)
+	t_motion *motion_current = NULL; //Current location
 
 	/* Main signal generation loop */
 	long count = 0;
+	
 	while (1)
 	{
 		count++;
@@ -2111,40 +2113,40 @@ int main(int argc, char *argv[])
 		 * See if we have already current motion.
 		 * If not check if there is a new one from the UDP server
 //		 */
-//		if (motion_current == NULL) {
-//			/* Get next motion path as it was prepared by the UDP server */
-//			//motion = get_next_motion_path();
-//
-//			if (motion != NULL) {
-//				motion_current = motion;
-//				llh2xyz_decimal(motion_current->llh, xyz);
-//			}
-//		}
+		if (motion_current == NULL) {
+			/* Get next motion path as it was prepared by the UDP server */
+			//motion = get_next_motion_path();
+
+			if (motion != NULL) {
+				motion_current = motion;
+				llh2xyz_decimal(motion_current->llh, xyz);
+			}
+		}
 
 		/* Normal motion processing flow:
 		 * If we have current motion, use it as next coordinate,
 		 * if not - keep previous coordinate
 		 */
-//		if (motion_current != NULL) {
-//			llh2xyz_decimal(motion_current->llh, xyz);
-//			motion_current = motion_current->next;
-//
-//			/* Check if that is the last element of the motion */
-//			if (motion_current == NULL) {
-//				/* Delete all this path and free memory */
-//				del_motion_path(motion);
-//				motion = NULL;
-//			}
-//
-//			xyz2llh_decimal(xyz, llh);
-//			printf("current location: lat %lf lon %lf h %lf\n",
-//							llh[0], llh[1], llh[2]);
-//		} else {
-//			//Do nothing, keep existing xyz
-//			xyz2llh_decimal(xyz, llh);
-//			printf("current location static: lat %lf lon %lf h %lf\n",
-//										llh[0], llh[1], llh[2]);
-//		}
+		if (motion_current != NULL) {
+			llh2xyz_decimal(motion_current->llh, xyz);
+			motion_current = motion_current->next;
+
+			/* Check if that is the last element of the motion */
+			if (motion_current == NULL) {
+				/* Delete all this path and free memory */
+				del_motion_path(motion);
+				motion = NULL;
+			}
+
+			xyz2llh_decimal(xyz, llh);
+			printf("current location: lat %lf lon %lf h %lf\n",
+							llh[0], llh[1], llh[2]);
+		} else {
+			//Do nothing, keep existing xyz
+			xyz2llh_decimal(xyz, llh);
+			printf("current location static: lat %lf lon %lf h %lf\n",
+										llh[0], llh[1], llh[2]);
+		}
 
 //		if (count % 1000 == 0){
 //			xyz2llh_decimal(xyz, llh);
