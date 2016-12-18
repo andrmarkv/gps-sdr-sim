@@ -13,5 +13,5 @@ gps-sdr-sim: gpssim.o
 
 clean:
 	rm -f gpssim.o gps-sdr-sim *.bin
-#	mkfifo gpssim.bin
+	mkfifo gpssim.bin
 

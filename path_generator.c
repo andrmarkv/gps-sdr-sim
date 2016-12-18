@@ -236,7 +236,7 @@ int del_motion_path(t_motion* motion) {
  * Print all values of the t_motion structure
  * Very useful for verification
  */
-void* print_motion(t_motion *motion) {
+void print_motion(t_motion *motion) {
 	int i = 1;
 	while (1) {
 		if (motion == NULL)
@@ -363,7 +363,7 @@ void* path_reader(void *arg) {
 			double lat1 = atof(array[3]);
 			double lon1 = atof(array[4]);
 			double speed = atof(array[5]);
-			double pause = atof(array[6]);
+			//double pause = atof(array[6]);
 
 			/* Get motion path out of coordinates and speed */
 			t_motion *motion = calc_motion(lat0, lon0, lat1, lon1, speed);
@@ -431,7 +431,7 @@ int process_message(char* buf, char* msg_back) {
 void* start_udp_server(void *arg) {
 	int sockfd; /* socket */
 	int portno = UDP_LISTEN_PORT; /* port to listen on */
-	int clientlen; /* byte size of client's address */
+	socklen_t clientlen; /* byte size of client's address */
 	struct sockaddr_in serveraddr; /* server's addr */
 	struct sockaddr_in clientaddr; /* client addr */
 	struct hostent *hostp; /* client host info */

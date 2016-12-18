@@ -2115,7 +2115,7 @@ int main(int argc, char *argv[])
 //		 */
 		if (motion_current == NULL) {
 			/* Get next motion path as it was prepared by the UDP server */
-			//motion = get_next_motion_path();
+			motion = get_next_motion_path();
 
 			if (motion != NULL) {
 				motion_current = motion;
@@ -2143,9 +2143,9 @@ int main(int argc, char *argv[])
 							llh[0], llh[1], llh[2]);
 		} else {
 			//Do nothing, keep existing xyz
-			xyz2llh_decimal(xyz, llh);
-			printf("current location static: lat %lf lon %lf h %lf\n",
-										llh[0], llh[1], llh[2]);
+//			xyz2llh_decimal(xyz, llh);
+//			printf("current location static: lat %lf lon %lf h %lf\n",
+//										llh[0], llh[1], llh[2]);
 		}
 
 //		if (count % 1000 == 0){
@@ -2271,9 +2271,9 @@ int main(int argc, char *argv[])
 			fwrite(iq_buff, 2, 2*iq_buff_size, fp);
 
 //			hexDump("DUMP", iq_buff, 2);
-			if (count == 100) {
-				break;
-			}
+//			if (count == 100) {
+//				break;
+//			}
 		}
 
 		//
@@ -2341,7 +2341,7 @@ int main(int argc, char *argv[])
 		grx = incGpsTime(grx, 0.1);
 
 		// Update time counter
-		printf("\rTime into run = %4.1f", subGpsTime(grx, g0));
+		printf("\rTime into run = %4.1f ", subGpsTime(grx, g0));
 		fflush(stdout);
 	}
 

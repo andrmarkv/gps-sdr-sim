@@ -21,7 +21,7 @@ void* start_udp_server(void *arg);
 t_motion* get_next_motion_path();
 int add_motion_path(t_motion* motion);
 int del_motion_path(t_motion* motion);
-void* print_motion(t_motion *motion);
+void print_motion(t_motion *motion);
 void hexDump (char *desc, void *addr, int len);
 
 
