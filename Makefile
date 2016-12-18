@@ -9,8 +9,8 @@ CFLAGS=-O3 -Wall
 LDFLAGS=-lm -lpthread
 
 gps-sdr-sim: gpssim.o
-	${CC} $< ${LDFLAGS} -o $@
-	#${CC} getopt.c cqueue.c path_generator.c gpssim.c ${LDFLAGS} -o $@
+	#${CC} $< ${LDFLAGS} -o $@
+	${CC} ${CFLAGS} getopt.c cqueue.c path_generator.c gpssim.c ${LDFLAGS} -o $@
 
 clean:
 	rm -f gpssim.o gps-sdr-sim *.bin
