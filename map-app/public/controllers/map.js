@@ -4,12 +4,35 @@ socket.on('gpsUpdate', function (data) {
 	console.log(data);
 });
 
-angular.module('appMaps', [ 'uiGmapgoogle-maps' ]).config(
+var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps' ]);
+
+var curLocation = {
+	coords: {
+		latitude : 24.495774,
+		longitude : 54.358074
+	}
+
+};
+
+myapp.config(
 		function(uiGmapGoogleMapApiProvider) {
 			uiGmapGoogleMapApiProvider.configure({
 				libraries : 'geometry,visualization'
 			});
-		}).controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
+		});
+
+myapp.controller("TimerController", function($scope, $interval){
+
+    $interval(callAtTimeout, 1000, 0);
+
+});
+
+
+function callAtTimeout() {
+	console.log("Timeout occurred 1 " + curLocation.coords.latitude);
+}
+
+myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	$scope.map = {
 		center : {
 			latitude : 24.495774,
@@ -70,17 +93,14 @@ angular.module('appMaps', [ 'uiGmapgoogle-maps' ]).config(
 		
 		$scope.marker0 = {
 		    id: 0,
-		    coords: {
-		    	latitude : 24.495774,
-				longitude : 54.358074
-		    },
+		    coords: curLocation.coords,
 		    options: { 
 		    	draggable: false, 
-		    	opacity: 0.5, 
+		    	opacity: 0.85, 
 		    	icon: {
 		    		//path: google.maps.SymbolPath.CIRCLE,
-		    		url: 'img/green_marker.png',
-		    		scaledSize: new google.maps.Size(20, 34)
+		    		url: 'img/cur_pos.png',
+		    		scaledSize: new google.maps.Size(24, 24)
 		    	}, 
 		    	//animation: google.maps.Animation.BOUNCE,
 		    },
