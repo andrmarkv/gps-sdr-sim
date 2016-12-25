@@ -18,7 +18,7 @@ html, body, #map_canvas {
 }
 
 .grid {
-	width: 350px;
+	width: 400px;
 	height: 30px;
 	background-color: rgba(210, 130, 240, 0.3) !important;
 	position: absolute; 
@@ -46,8 +46,8 @@ html, body, #map_canvas {
 	width: 50px;
 	font-family: sans-serif;
 	font-weight: bold;
-	margin-left:10px;
-    margin-right:10px;
+	margin-left:5px;
+    margin-right:5px;
 }
 
 .mbuttonRed{
@@ -55,7 +55,14 @@ html, body, #map_canvas {
 	font-family: sans-serif;
 	font-weight: bold;
 	color:red;
-	margin-left:10px;
-    margin-right:10px;
+	margin-left:5px;
+    margin-right:5px;
 }
 
+.mbuttonBlue{
+	width: 50px;
+	font-family: sans-serif;
+	font-weight: bold;
+	color:blue;
+	margin-left:5px;
+    margin-right:5px;

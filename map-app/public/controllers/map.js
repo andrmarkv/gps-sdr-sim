@@ -1,11 +1,3 @@
-var socket = io.connect('http://localhost:8000');
-
-socket.on('gpsUpdate', function (data) {
-	console.log(data);
-});
-
-var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps' ]);
-
 var curLocation = {
 	coords: {
 		latitude : 24.495774,
@@ -13,6 +5,16 @@ var curLocation = {
 	}
 
 };
+
+var socket = io.connect('http://localhost:8000');
+
+socket.on('gpsUpdate', function (data) {
+	//console.log(data.latitude + " " + data.longitude);
+	curLocation.coords.latitude = data.latitude; 
+	curLocation.coords.longitude = data.longitude;
+});
+
+var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps' ]);
 
 myapp.config(
 		function(uiGmapGoogleMapApiProvider) {
@@ -29,7 +31,8 @@ myapp.controller("TimerController", function($scope, $interval){
 
 
 function callAtTimeout() {
-	console.log("Timeout occurred 1 " + curLocation.coords.latitude);
+//	console.log("Timeout occurred 1 " + curLocation.coords.latitude);
+	socket.emit('getCurLocation', {});
 }
 
 myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
@@ -80,7 +83,7 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				}
 			}
 		};
-
+		
 		$scope.mapEvents = {
 			click : function(eventName) {
 				alert("Model: event:" + eventName);
@@ -98,28 +101,48 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		    	draggable: false, 
 		    	opacity: 0.85, 
 		    	icon: {
-		    		//path: google.maps.SymbolPath.CIRCLE,
 		    		url: 'img/cur_pos.png',
-		    		scaledSize: new google.maps.Size(24, 24)
+		    		scaledSize: new google.maps.Size(24, 24),
+		    		anchor: new google.maps.Point(12, 12),
 		    	}, 
 		    	//animation: google.maps.Animation.BOUNCE,
 		    },
 		};
 		
 		$scope.marker1 = {
-			    id: 0,
-			    coords: {
-			    	latitude : 24.496152,
-					longitude : 54.358846
-			    },
-			    options: { draggable: true },
-			    events: {
-			        dragend: function (marker, eventName, args) {
-			        	msg = "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude;
-			        	//console.log(msg)
-			        }
-			    }
-			};
+		    id: 0,
+		    coords: {
+		    	latitude : 50.393484,
+				longitude : 30.516613
+		    },
+		    options: { draggable: true },
+		    events: {
+		        dragend: function (marker, eventName, args) {
+		        	msg = "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude;
+		        	//console.log(msg)
+		        }
+		    }
+		};
+		
+		$scope.connector = {
+			id : 2,
+			path : [$scope.marker0.coords, $scope.marker1.coords],
+			stroke : {
+				color : '#4e99e5',
+				weight : 1
+			},
+			editable : false,
+			draggable : false,
+			geodesic : true,
+			visible : true,
+			icons : [ {
+				icon : {
+					path : google.maps.SymbolPath.FORWARD_OPEN_ARROW
+				},
+				offset : '25px',
+				repeat : '50px'
+			} ],
+		};		
 		
 	});
 	
@@ -145,10 +168,14 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		socket.emit('stopMoving', {});
 	};
 	
-	$scope.moveMarker = function() {
-		$scope.marker0.coords.latitude = $scope.marker1.coords.latitude;
-		$scope.marker0.coords.longitude = $scope.marker1.coords.longitude;
-		$scope.marker1.coords.latitude = $scope.marker1.coords.latitude + 0.00001;
-		$scope.marker1.coords.longitude = $scope.marker1.coords.longitude + 0.00001;
+	$scope.joinMarkers = function() {
+		socket.emit('startMoving', {
+			latitude0: $scope.marker0.coords.latitude, 
+			longitude0: $scope.marker0.coords.longitude,
+			latitude1: $scope.marker1.coords.latitude, 
+			longitude1: $scope.marker1.coords.longitude,
+			speed: 10000,
+			pause: 0,
+			});
 	};
 });

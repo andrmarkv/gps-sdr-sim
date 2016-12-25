@@ -56,8 +56,11 @@
 
 pthread_mutex_t path_mutex; //Mutex to control path messages
 pthread_mutex_t motion_mutex; //Mutex to control motion path list (list of coordinates)
+pthread_mutex_t stop_flag_mutex; //Mutex to control start/stop flag
 
 t_motions_list *motions_list;
+t_motion cur_loc = { 0 };
+int stop_flag = 0;
 
 /*
  * error - wrapper for perror
@@ -135,6 +138,34 @@ t_motion* get_next_motion_path() {
 
 	pthread_mutex_unlock(&motion_mutex);
 	return NULL;
+}
+
+/*
+ * Set up flag to signal start/stop gps simulation
+ * 1 stop flag is set
+ * 0 no stop flag
+ */
+void set_stop_flag(int flag) {
+	pthread_mutex_lock(&stop_flag_mutex);
+
+	stop_flag = flag;
+
+	pthread_mutex_unlock(&stop_flag_mutex);
+	return;
+}
+
+/*
+ * Retrieve flag to signal start/stop gps simulation
+ * 1 stop flag is set
+ * 0 no stop flag
+ */
+int get_stop_flag() {
+	pthread_mutex_lock(&stop_flag_mutex);
+
+	int flag = stop_flag;
+
+	pthread_mutex_unlock(&stop_flag_mutex);
+	return flag;
 }
 
 /*
@@ -269,15 +300,14 @@ t_motion* calc_motion(double lat0, double lon0, double lat1, double lon1,
 	 * slower then faster
 	 */
 	int steps = (round(d / (speed / 3.6))) * 10;
+	if (steps <= 0)
+		steps = 1;
 
 	/*
 	 * Find out value of the steps for latitude and longitude
 	 */
 	double dlat = (lat1 - lat0) / steps;
 	double dlon = (lon1 - lon0) / steps;
-
-	if (steps <= 0)
-		return NULL;
 
 	/*
 	 * Calculate path and populate t_motion structure with points
@@ -316,7 +346,7 @@ t_motion* calc_motion(double lat0, double lon0, double lat1, double lon1,
 	//printf("lat1=%lf, lon1=%lf\n", lat1, lon1);
 
 	printf("steps=%d, time=%d (sec), dlat=%lf, dlon=%lf\n", steps, steps / 10,
-				dlat, dlon);
+			dlat, dlon);
 
 	return start;
 }
@@ -366,11 +396,14 @@ void* path_reader(void *arg) {
 			//double pause = atof(array[6]);
 
 			/* Get motion path out of coordinates and speed */
+			printf("TEST. Calculating new motion path...\n");
 			t_motion *motion = calc_motion(lat0, lon0, lat1, lon1, speed);
 			//print_motion(motion);
 
 			/* Add new motion path to the list of ready paths */
+			printf("TEST. Adding new motion path...\n");
 			add_motion_path(motion);
+			printf("TEST. Adding new motion path. Done!\n");
 
 		} else {
 			//sleep, queue is empty
@@ -384,6 +417,57 @@ void* path_reader(void *arg) {
 }
 
 /*
+ * This function should delete all precalculated motions
+ * except the current one
+ */
+void clear_pending_movements() {
+	pthread_mutex_lock(&motion_mutex);
+
+	printf("clear_pending_movements, TEST 1\n");
+
+	if (!motions_list) {
+		printf("clear_pending_movements, TEST 2\n");
+		pthread_mutex_unlock(&motion_mutex);
+		return;
+	} else {
+		printf("clear_pending_movements, TEST 3\n");
+		/* skip the first motion_list*/
+		t_motions_list *current = motions_list->next;
+
+		printf("clear_pending_movements, TEST 4\n");
+
+		/* if there is no next, just return*/
+		if (!current) {
+			printf("clear_pending_movements, TEST 5\n");
+			pthread_mutex_unlock(&motion_mutex);
+			return;
+		}
+
+		printf("clear_pending_movements, TEST 6\n");
+		t_motions_list *to_be_deleted = NULL;
+		while (1) {
+			printf("clear_pending_movements, TEST 7\n");
+			/* If there is a next motion, delete current and exit*/
+			if (!current->next) {
+				printf("clear_pending_movements, TEST 8\n");
+				free(current);
+				break;
+			} else {
+				/* mark current as deleted and make current = next*/
+				to_be_deleted = current;
+				current = to_be_deleted->next;
+				free(to_be_deleted);
+				printf("clear_pending_movements, TEST 9\n");
+			}
+		}
+	}
+
+	printf("clear_pending_movements, TEST 10\n");
+	pthread_mutex_unlock(&motion_mutex);
+	return;
+}
+
+/*
  * Process message received by the UDP server.
  * It should either add path to the queue of the paths that has to be
  * used by path_reader
@@ -393,12 +477,10 @@ int process_message(char* buf, char* msg_back) {
 	int pos = 0;
 	int res = 0;
 
-	printf("process_message buf: %s\n", buf);
-
 	/* If that is new path message - add it to the queue and return OK*/
 	pos = findsbstr(buf, "PATH");
-	printf("process_message pos: %d\n", pos);
 	if (pos == 0) {
+		printf("got new PATH message: %s\n", buf);
 		pthread_mutex_lock(&path_mutex);
 		res = QueuePut(buf);
 		pthread_mutex_unlock(&path_mutex);
@@ -409,13 +491,28 @@ int process_message(char* buf, char* msg_back) {
 		}
 
 		sprintf(msg_back, "%s", "ADDED OK");
+
+		/* clear stop flag */
+		set_stop_flag(0);
+
 		return 1;
 	}
 
-	/* If that is new status message - return current location*/
+	/* If that is get location message - return current location*/
 	pos = findsbstr(buf, "CUR_LOC");
 	if (pos == 0) {
-		sprintf(msg_back, "%s", "??? GET CURRENT LOCATION");
+		sprintf(msg_back, "%s;%lf;%lf;%lf", "LOCATION", cur_loc.llh[0],
+				cur_loc.llh[1], cur_loc.llh[2]);
+		return 1;
+	}
+
+	/* If that is stop message - remove all calculated paths*/
+	pos = findsbstr(buf, "STOP");
+	if (pos == 0) {
+		printf("got STOP message\n");
+		clear_pending_movements();
+		set_stop_flag(1);
+		sprintf(msg_back, "%s", "STOP OK");
 		return 1;
 	}
 
@@ -514,8 +611,8 @@ void* start_udp_server(void *arg) {
 		if (hostaddrp == NULL)
 			error("ERROR on inet_ntoa\n");
 
-		printf("server received %Zu/%d bytes, from %s, data: %s\n", strlen(buf),
-				n, hostaddrp, buf);
+//		printf("server received %Zu/%d bytes, from %s, data: %s\n", strlen(buf),
+//				n, hostaddrp, buf);
 
 		if (n > 0) {
 			res = process_message(buf, msg_back);
@@ -534,54 +631,68 @@ void* start_udp_server(void *arg) {
 	pthread_exit(NULL);
 }
 
-void hexDump (char *desc, void *addr, int len) {
-    int i;
-    unsigned char buff[17];
-    unsigned char *pc = (unsigned char*)addr;
+void hexDump(char *desc, void *addr, int len) {
+	int i;
+	unsigned char buff[17];
+	unsigned char *pc = (unsigned char*) addr;
 
-    // Output description if given.
-    if (desc != NULL)
-        printf ("%s:\n", desc);
+	// Output description if given.
+	if (desc != NULL)
+		printf("%s:\n", desc);
 
-    if (len == 0) {
-        printf("  ZERO LENGTH\n");
-        return;
-    }
-    if (len < 0) {
-        printf("  NEGATIVE LENGTH: %i\n",len);
-        return;
-    }
+	if (len == 0) {
+		printf("  ZERO LENGTH\n");
+		return;
+	}
+	if (len < 0) {
+		printf("  NEGATIVE LENGTH: %i\n", len);
+		return;
+	}
 
-    // Process every byte in the data.
-    for (i = 0; i < len; i++) {
-        // Multiple of 16 means new line (with line offset).
+	// Process every byte in the data.
+	for (i = 0; i < len; i++) {
+		// Multiple of 16 means new line (with line offset).
 
-        if ((i % 16) == 0) {
-            // Just don't print ASCII for the zeroth line.
-            if (i != 0)
-                printf ("  %s\n", buff);
+		if ((i % 16) == 0) {
+			// Just don't print ASCII for the zeroth line.
+			if (i != 0)
+				printf("  %s\n", buff);
 
-            // Output the offset.
-            printf ("  %04x ", i);
-        }
+			// Output the offset.
+			printf("  %04x ", i);
+		}
 
-        // Now the hex code for the specific character.
-        printf (" %02x", pc[i]);
+		// Now the hex code for the specific character.
+		printf(" %02x", pc[i]);
 
-        // And store a printable ASCII character for later.
-        if ((pc[i] < 0x20) || (pc[i] > 0x7e))
-            buff[i % 16] = '.';
-        else
-            buff[i % 16] = pc[i];
-        buff[(i % 16) + 1] = '\0';
-    }
+		// And store a printable ASCII character for later.
+		if ((pc[i] < 0x20) || (pc[i] > 0x7e))
+			buff[i % 16] = '.';
+		else
+			buff[i % 16] = pc[i];
+		buff[(i % 16) + 1] = '\0';
+	}
 
-    // Pad out last line if not exactly 16 characters.
-    while ((i % 16) != 0) {
-        printf ("   ");
-        i++;
-    }
+	// Pad out last line if not exactly 16 characters.
+	while ((i % 16) != 0) {
+		printf("   ");
+		i++;
+	}
 
-    // And print the final ASCII bit.
-    printf ("  %s\n", buff);
+	// And print the final ASCII bit.
+	printf("  %s\n", buff);
+}
+
+/*
+ * Set current location as it is replayed by the GPS simulator.
+ * This method should be called by the main gpssim thread to
+ * reflect currently replayed location. Retrieval fo the location
+ * is implemented using CUR_LOC message processing.
+ * It is OK to have in not thread safe
+ */
+void set_cur_location(double llh[]) {
+	//printf("set_cur_location %lf, %lf, %lf:\n", llh[0], llh[1], llh[2]);
+	cur_loc.llh[0] = llh[0];
+	cur_loc.llh[1] = llh[1];
+	cur_loc.llh[2] = llh[2];
 }

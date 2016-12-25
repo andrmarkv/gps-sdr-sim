@@ -13,16 +13,22 @@ var HOST = '127.0.0.1';
 
 //Handle UDP Socket response from GPS simulator (confirmation and current location)
 function handleUDPResponse(msg, rinfo){
-	console.log("got Response: %s", msg);
+	//console.log("got Response: %s", msg);
+	if(msg.indexOf("LOCATION") > -1) {
+		processCurLocation(msg);
+	}
+	if(msg.indexOf("ADDED") > -1) {
+		console.log("got start moving response: %s", msg);
+	}
+	if(msg.indexOf("STOP") > -1) {
+		console.log("got stop moving response: %s", msg);
+	}
 }
 
 //Initialize UDP server client to communicate with GPS simulator
 function initUDPClient(){
 	var dgram = require('dgram');
-	var message = new Buffer('PATH|123;123;100;100');
-
 	var client = dgram.createSocket('udp4', handleUDPResponse);
-	
 	return client;
 }
 
@@ -39,24 +45,37 @@ io.on('connection', function (socket) {
 	  console.log("got startMoving event: %j", data);
 	  
 	  var msg = data.latitude0 + ";" + data.longitude0 + ";" + data.latitude1 + ";" + data.longitude1 + ";" + data.speed + ";" + data.pause
-	  sendPath("PATH;" + msg);
-	  
-	  for (var i = 0; i < 100; i++) {
-		socket.emit('gpsUpdate', { pos: i });
-	  }
+	  sendUDPMessage("PATH;" + msg);
 	  
 	  console.log("exit startMoving event");
   });
   
   socket.on('stopMoving', function (data) {
-	  console.log("got stopMoving event: " + data);
+	  sendUDPMessage("STOP");
+  });
+  
+  socket.on('getCurLocation', function (data) {
+	  sendUDPMessage("CUR_LOC");
   });
   
 });
 
-function sendPath(message){
+function sendUDPMessage(message){
 	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
 	    if (err) throw err;
-	    console.log('UDP message sent to ' + HOST +':'+ PORT + "msg: " + message);
+	    //console.log('UDP message sent to ' + HOST +':'+ PORT + " msg: " + message);
 	});
+}
+
+function processCurLocation(message){
+	var msg = message.toString();
+	var arr = msg.split(";");
+	if (arr.length != 4) {
+		console.log("Error! Got wrong LOCATION message: " + msg);
+		return;
+	}
+	
+	if (io) {
+		io.emit('gpsUpdate', { latitude: arr[1], longitude : arr[2] });
+	}
 }

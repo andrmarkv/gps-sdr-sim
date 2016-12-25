@@ -1994,7 +1994,7 @@ int main(int argc, char *argv[])
 		printf("ERROR: No current set of ephemerides has been found.\n");
 		exit(1);
 	} else {
-		printf("TEST: ieph=%d\n", ieph);
+		printf("Selected ephemerides index: %d\n", ieph);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -2076,8 +2076,11 @@ int main(int argc, char *argv[])
 
 
 	// Allocate visible satellites
-	double llh[3] = {24.506449, 54.372192, 111};
+	//double llh[3] = {24.506449, 54.372192, 111};
+	double llh[3] = {50.393484, 30.516613, 111};
 	double xyz[3] = {0, 0, 0};
+	/* Update global pointer to current location for other threads*/
+	set_cur_location(llh);
 
 	// Convert geodetic position into ECEF coordinates
 	llh2xyz_decimal(llh, xyz);
@@ -2112,7 +2115,7 @@ int main(int argc, char *argv[])
 		/*
 		 * See if we have already current motion.
 		 * If not check if there is a new one from the UDP server
-//		 */
+		 */
 		if (motion_current == NULL) {
 			/* Get next motion path as it was prepared by the UDP server */
 			motion = get_next_motion_path();
@@ -2128,8 +2131,18 @@ int main(int argc, char *argv[])
 		 * if not - keep previous coordinate
 		 */
 		if (motion_current != NULL) {
+			/* Update global pointer to current location for other threads*/
+			set_cur_location(motion_current->llh);
+
 			llh2xyz_decimal(motion_current->llh, xyz);
 			motion_current = motion_current->next;
+
+			/* Check if stop movement flag was set */
+			if (get_stop_flag() > 0) {
+				printf("stopping motion by request\n");
+				/* indicate that there is no current motion */
+				motion_current = NULL;
+			}
 
 			/* Check if that is the last element of the motion */
 			if (motion_current == NULL) {
@@ -2139,7 +2152,7 @@ int main(int argc, char *argv[])
 			}
 
 			xyz2llh_decimal(xyz, llh);
-			printf("current location: lat %lf lon %lf h %lf\n",
+			printf("moving, current location: lat %lf lon %lf h %lf\n",
 							llh[0], llh[1], llh[2]);
 		} else {
 			//Do nothing, keep existing xyz
@@ -2147,12 +2160,6 @@ int main(int argc, char *argv[])
 //			printf("current location static: lat %lf lon %lf h %lf\n",
 //										llh[0], llh[1], llh[2]);
 		}
-
-//		if (count % 1000 == 0){
-//			xyz2llh_decimal(xyz, llh);
-//			printf("count = %ld, current location: lat %lf lon %lf h %lf\n",
-//					count, llh[0], llh[1], llh[2]);
-//		}
 
 		for (i=0; i<MAX_CHAN; i++)
 		{

@@ -14,6 +14,7 @@
     <script src="js/angular-google-maps.js?key=AIzaSyDPwOsXQHklBAmpvQ53J6AS_vq7JpMIx_U&"></script>
     <script type='text/javascript' src='controllers/map.js'></script><!--script-->
     
+    
 </head>
 
 <body>
@@ -31,6 +32,18 @@
 
 		<ui-gmap-marker coords="marker0.coords" options="marker0.options" events="marker0.events" idkey="marker0.id">
 		<ui-gmap-marker coords="marker1.coords" options="marker1.options" events="marker1.events" idkey="marker1.id">
+
+        <ui-gmap-polyline 
+        	path="connector.path" 
+        	stroke="connector.stroke" 
+        	visible='connector.visible'
+            geodesic='connector.geodesic' 
+            fit="true" 
+            editable="connector.editable" 
+            draggable="connector.draggable" 
+            icons='connector.icons'
+            >
+         </ui-gmap-polyline>
     	
 <!--         <ui-gmap-polyline  -->
 <!--         	path="polyline.path"  -->
@@ -62,7 +75,7 @@
 		        
 		        <button class="mbutton" ng-click="startMoving()">GO</button>
 		        <button class="mbuttonRed" ng-click="stopMoving()">STOP</button>
-		        <button class="mbuttonRed" ng-click="moveMarker()">JOIN</button>
+		        <button class="mbuttonBlue" ng-click="joinMarkers()">JOIN</button>
 	        </div>
 		</form>
 	</div>    
