@@ -1,65 +1,116 @@
 var curLocation = {
-	coords: {
-		latitude : 24.495774,
-		longitude : 54.358074
+	coords : {
+		latitude : 48.287776,
+		longitude : 25.933566,
+	}
+
+};
+
+var markerLocation = {
+	coords : {
+		latitude : 48.287776,
+		longitude : 25.933566,
+	}
+
+};
+
+var mapCenter = {
+	coords : {
+		latitude : 48.287776,
+		longitude : 25.933566,
 	}
 
 };
 
 var socket = io.connect('http://localhost:8000');
 
-socket.on('gpsUpdate', function (data) {
-	//console.log(data.latitude + " " + data.longitude);
-	curLocation.coords.latitude = data.latitude; 
-	curLocation.coords.longitude = data.longitude;
+var currentPathIndex = 0; //index of the currently active path element
+var isReplayRunning = false; //to indicate if we are processing replay
+var isStopped = false; //to indicate that STOP button was pressed
+var isPaused = false; //to indicate that we are processing pause and not moving
+var readyForNextMotion = false; //to indicate that we can replay next motion
+
+var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps', 'simpleGrid' ]);
+
+myapp.config(function(uiGmapGoogleMapApiProvider) {
+	uiGmapGoogleMapApiProvider.configure({
+		libraries : 'geometry,visualization'
+	});
 });
 
-var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps' ]);
-
-myapp.config(
-		function(uiGmapGoogleMapApiProvider) {
-			uiGmapGoogleMapApiProvider.configure({
-				libraries : 'geometry,visualization'
-			});
-		});
-
-myapp.controller("TimerController", function($scope, $interval){
-
-    $interval(callAtTimeout, 1000, 0);
-
+myapp.controller("TimerController", function($scope, $interval) {
+	$interval(callAtTimeout, 1000, 0);
 });
-
 
 function callAtTimeout() {
-//	console.log("Timeout occurred 1 " + curLocation.coords.latitude);
+	// console.log("Timeout occurred 1 " + curLocation.coords.latitude);
 	socket.emit('getCurLocation', {});
 }
 
 myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	$scope.map = {
-		center : {
-			latitude : 24.495774,
-			longitude : 54.358074
-		},
+		center : mapCenter.coords,
 		zoom : 18,
 		bounds : {}
 	};
+	
+	$scope.myPath = [];
+	
+	$scope.isRepeat = true;
+
+	$scope.myGridConfig = {
+		// should return your data (an array)
+		getData : function() {
+			return $scope.myPath;
+		},
+
+		options : {
+			"showDeleteButton": true,
+			"dynamicColumns": true,
+			rowDeleted: function (row) {alert(row) },
+			columns : [ {
+				field : 'tag',
+			}, {
+				field : 'latitude'
+			}, {
+				field : 'longitude'
+			}, {
+				field : 'speed',
+				inputType : 'number'
+			}, {
+				field : 'pause',
+				inputType : 'number'
+			}]
+		}
+	}
+	
+	socket.on('gpsUpdate', function(data) {
+		// console.log(data.latitude + " " + data.longitude);
+		
+		/*
+		 * If we reached end of the segment (coordinates stopped changing)
+		 */
+		if (data.latitude == curLocation.coords.latitude && 
+			data.longitude == curLocation.coords.longitude) {
+			
+
+			if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
+				$scope.replayNextElement();
+			}
+		} else {
+			if (!readyForNextMotion) {
+				readyForNextMotion = true; //we detected initiation of the move	
+			}
+		}
+		
+		curLocation.coords.latitude = data.latitude;
+		curLocation.coords.longitude = data.longitude;
+	});
+
 	uiGmapGoogleMapApi.then(function() {
 		$scope.polyline = {
 			id : 1,
-			path : [ {
-				latitude : 24.495310,
-				longitude : 54.357449
-			}, {
-				latitude : 24.496082,
-				longitude : 54.357787
-			}, {
-				latitude : 24.496512,
-				longitude : 54.358929
-			}, {
-				latitude : 24.495867,
-				longitude : 54.358336
-			} ],
+			path : $scope.myPath,
 			stroke : {
 				color : '#6060FB',
 				weight : 3
@@ -70,20 +121,20 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			visible : true,
 			icons : [ {
 				icon : {
-					path : google.maps.SymbolPath.BACKWARD_OPEN_ARROW
+					path : google.maps.SymbolPath.FORWARD_OPEN_ARROW
 				},
 				offset : '25px',
 				repeat : '50px'
 			} ],
-			
-			//Events registered with the polyline
-			events: {
+
+			// Events registered with the polyline
+			events : {
 				click : function(gMarker, eventName, model) {
 					alert("Model: event:" + eventName);
 				}
 			}
 		};
-		
+
 		$scope.mapEvents = {
 			click : function(eventName) {
 				alert("Model: event:" + eventName);
@@ -92,43 +143,42 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				alert("Model: event:" + eventName);
 			},
 		};
-		
-		
+
 		$scope.marker0 = {
-		    id: 0,
-		    coords: curLocation.coords,
-		    options: { 
-		    	draggable: false, 
-		    	opacity: 0.85, 
-		    	icon: {
-		    		url: 'img/cur_pos.png',
-		    		scaledSize: new google.maps.Size(24, 24),
-		    		anchor: new google.maps.Point(12, 12),
-		    	}, 
-		    	//animation: google.maps.Animation.BOUNCE,
-		    },
+			id : 0,
+			coords : curLocation.coords,
+			options : {
+				draggable : false,
+				opacity : 0.85,
+				icon : {
+					url : 'img/cur_pos.png',
+					scaledSize : new google.maps.Size(24, 24),
+					anchor : new google.maps.Point(12, 12),
+				},
+			// animation: google.maps.Animation.BOUNCE,
+			},
 		};
-		
+
 		$scope.marker1 = {
-		    id: 0,
-		    coords: {
-		    	latitude : 50.393484,
-				longitude : 30.516613
-		    },
-		    options: { draggable: true },
-		    events: {
-		        dragend: function (marker, eventName, args) {
-		        	msg = "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude;
-		        	//console.log(msg)
-		        }
-		    }
+			id : 0,
+			coords : markerLocation.coords,
+			options : {
+				draggable : true
+			},
+			events : {
+				dragend : function(marker, eventName, args) {
+					msg = "lat: " + $scope.marker1.coords.latitude + ' '
+							+ 'lon: ' + $scope.marker1.coords.longitude;
+					// console.log(msg)
+				}
+			}
 		};
-		
+
 		$scope.connector = {
 			id : 2,
-			path : [$scope.marker0.coords, $scope.marker1.coords],
+			path : [ $scope.marker0.coords, $scope.marker1.coords ],
 			stroke : {
-				color : '#4e99e5',
+				color : '#e53027',
 				weight : 1
 			},
 			editable : false,
@@ -142,40 +192,252 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				offset : '25px',
 				repeat : '50px'
 			} ],
-		};		
-		
+		};
+
 	});
-	
-	
+
 	$scope.moveControl = {
-		speed: 15,
-		pause: 0,
+		speed : 15,
+		pause : 0,
 	}
-	
+
 	$scope.startMoving = function() {
-		//alert("GO!");
+		// alert("GO!");
+		isStopped = false;
 		socket.emit('startMoving', {
-			latitude0: $scope.marker0.coords.latitude, 
-			longitude0: $scope.marker0.coords.longitude,
-			latitude1: $scope.marker1.coords.latitude, 
-			longitude1: $scope.marker1.coords.longitude,
-			speed: $scope.moveControl.speed,
-			pause: $scope.moveControl.pause,
-			});
+			latitude0 : $scope.marker0.coords.latitude,
+			longitude0 : $scope.marker0.coords.longitude,
+			latitude1 : $scope.marker1.coords.latitude,
+			longitude1 : $scope.marker1.coords.longitude,
+			speed : $scope.moveControl.speed,
+			pause : $scope.moveControl.pause,
+		});
 	};
-	
+
 	$scope.stopMoving = function() {
+		isStopped = true;
+		isReplayRunning = false;
+		isPaused = false;
 		socket.emit('stopMoving', {});
 	};
-	
+
 	$scope.joinMarkers = function() {
 		socket.emit('startMoving', {
-			latitude0: $scope.marker0.coords.latitude, 
-			longitude0: $scope.marker0.coords.longitude,
-			latitude1: $scope.marker1.coords.latitude, 
-			longitude1: $scope.marker1.coords.longitude,
-			speed: 10000,
-			pause: 0,
-			});
+			latitude0 : $scope.marker0.coords.latitude,
+			longitude0 : $scope.marker0.coords.longitude,
+			latitude1 : $scope.marker1.coords.latitude,
+			longitude1 : $scope.marker1.coords.longitude,
+			speed : 10000,
+			pause : 0,
+		});
 	};
+	
+	$scope.showHideTable = function() {
+		if (document.getElementById('grid-container-div').style.display == 'none') {
+			document.getElementById('grid-container-div').style.display = 'inline';
+			document.getElementById('show-hide').innerHTML = 'Hide'
+		} else {
+			document.getElementById('grid-container-div').style.display = 'none';
+			document.getElementById('show-hide').innerHTML = 'Show'
+		}
+	};
+	
+	$scope.addLocation = function() {
+		var newPoint = {
+				tag : '',
+				latitude : curLocation.coords.latitude,
+				longitude : curLocation.coords.longitude,
+				speed : $scope.moveControl.speed,
+				pause :  $scope.moveControl.pause,
+			};
+		$scope.myPath.push(newPoint);
+	};
+	
+//	$scope.$watch('polyline.path', function (newValue, oldValue, scope) {
+//		alert(1);
+//	}, true);
+	
+	$scope.parseLoadedFile = function (buf){
+		try{
+			arr = JSON.parse(buf);
+			
+			//Logically all what has to be done is
+			//$scope.myPath = arr;
+			//but it does not update polyline, updates only table
+			
+			/*
+			 * We do complex and crazy way by reassigning existing
+			 * elements and adding new ones
+			 */
+			for (var i = 0; i < arr.length; i++){
+			    var obj = arr[i];
+			    
+			    var newPoint = {
+						tag : obj.tag,
+						latitude : obj.latitude,
+						longitude : obj.longitude,
+						speed : obj.speed,
+						pause :  obj.pause,
+				};
+			    
+			    if ($scope.myPath.length > i) {
+			    	$scope.myPath[i] = newPoint;
+				} else {
+					$scope.myPath.push(newPoint);	
+				}
+			}
+			
+			/*
+			 * Now we have to delete extra elements if initial
+			 * array was longer then new one
+			 */
+			if ($scope.myPath.length > arr.length) {
+				$scope.myPath.splice(arr.length, ($scope.myPath.length - arr.length));
+			}
+			
+			/*
+			 * Move center of the map to the first point of the polyline
+			 */
+			curLocation.coords.latitude = $scope.myPath[0].latitude;
+			curLocation.coords.longitude = $scope.myPath[0].longitude;
+		} catch(err) {
+			return 0;
+		}
+	}
+	
+	$scope.loadLocationsFile = function() {
+		var fileSelector = document.createElement('input');
+		fileSelector.setAttribute('type', 'file');
+		fileSelector.addEventListener('change', readSingleFile, false);
+		fileSelector.click();
+		
+		function readSingleFile(evt) {
+		    //Retrieve the first (and only!) File from the FileList object
+		    var f = evt.target.files[0]; 
+
+		    if (f) {
+		      var r = new FileReader();
+		      r.onload = function(e) { 
+		    	  var content = e.target.result;
+		    	  $scope.parseLoadedFile(content);
+		      }
+		      r.readAsText(f);
+		    } else { 
+		      alert("Failed to load file");
+		    }
+		  }
+	};
+	
+	$scope.saveLocationsFile = function() {
+		var data = $scope.myPath;
+		var json = JSON.stringify(data);
+		var blob = new Blob([json], {type: "application/json"});
+		var url = URL.createObjectURL(blob);
+		
+		// update link to new 'url'
+		link = document.getElementById('save-location');
+	    link.download = "motion_path.json";
+	    link.href = url;
+	};
+	
+	/*
+	 * Signal to start replay stored locations.
+	 * On the first step we have to get from current location
+	 * to the currentPathIndex location
+	 */
+	$scope.startReplay = function() {
+		if ($scope.myPath.length < 2) {
+			alert("Error! Need at least two locations to replay!");
+			return;
+		}
+		
+		var lat0 = curLocation.coords.latitude;
+		var lon0 = curLocation.coords.longitude;
+		
+		var lat1 = $scope.myPath[currentPathIndex].latitude;
+		var lon1 = $scope.myPath[currentPathIndex].longitude;
+		var speed = $scope.moveControl.speed;
+		var pause = $scope.moveControl.pause;
+		
+		/*
+		 * We need this indicator to start detection of the move
+		 * as it actual move might happen after some delay
+		 */
+		isMoveDetected = false;
+		
+		socket.emit('startMoving', {
+			latitude0 : lat0,
+			longitude0 : lon0,
+			latitude1 : lat1,
+			longitude1 : lon1,
+			speed : speed,
+			pause : pause,
+		});
+		
+		isReplayRunning = true;
+		isStopped = false;
+		isPaused = false;
+		readyForNextMotion = true;
+	}
+	
+	/*
+	 * Signal to replay next element from the saved path
+	 */
+	$scope.replayNextElement = function() {
+		if ($scope.myPath.length < 2) {
+			alert("Error! Need at least two locations to replay!");
+			return;
+		}
+		
+		var lat0 = $scope.myPath[currentPathIndex].latitude;
+		var lon0 = $scope.myPath[currentPathIndex].longitude;
+		
+		var lat1 = 0.0;
+		var lon1 = 0.0;
+		var speed = 0.0;
+		var pause = 0.0;
+		var tag = "";
+		if ($scope.myPath.length == currentPathIndex + 1) {
+			lat1 = $scope.myPath[0].latitude;
+			lon1 = $scope.myPath[0].longitude;
+			speed = $scope.myPath[currentPathIndex].speed;
+			pause = $scope.myPath[currentPathIndex].pause;
+			tag = $scope.myPath[currentPathIndex].tag;
+			currentPathIndex = 0;
+		} else {
+			lat1 = $scope.myPath[currentPathIndex + 1].latitude;
+			lon1 = $scope.myPath[currentPathIndex + 1].longitude;
+			speed = $scope.myPath[currentPathIndex].speed;
+			pause = $scope.myPath[currentPathIndex].pause;
+			tag = $scope.myPath[currentPathIndex].tag;
+			currentPathIndex = currentPathIndex + 1;
+		}
+		
+		//If we have to introduce a pause
+//		alert("before pause");
+
+		isPaused = true; //to indicate that we entered pause
+		setTimeout(function(){
+			//alert("execution of the detalyed function starts, tag: " + tag);
+			
+			/*
+			 * We need this indicator to start detection of the move
+			 * as it actual move might happen after some delay
+			 */
+			readyForNextMotion = false;
+			
+			socket.emit('startMoving', {
+				latitude0 : lat0,
+				longitude0 : lon0,
+				latitude1 : lat1,
+				longitude1 : lon1,
+				speed : speed,
+				pause : pause,
+			});
+			
+			isPaused = false; //to indicate that we should start moving
+		}, pause * 1000);
+		
+//		alert("after pause");
+	}
 });

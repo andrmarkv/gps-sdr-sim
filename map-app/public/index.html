@@ -8,12 +8,13 @@
     <script src="/socket.io/socket.io.js"></script>
     
     <link rel="stylesheet" href="css/style.css" />
+    
     <script src="js/angular.js"></script>
     <script src="js/lodash.js"></script>
     <script src="js/angular-simple-logger.js"></script>
     <script src="js/angular-google-maps.js?key=AIzaSyDPwOsXQHklBAmpvQ53J6AS_vq7JpMIx_U&"></script>
-    <script type='text/javascript' src='controllers/map.js'></script><!--script-->
-    
+    <script type='text/javascript' src='controllers/map.js'></script>
+    <script src="js/simple-grid.js"></script>
     
 </head>
 
@@ -28,12 +29,10 @@
     	bounds="map.bounds"
     	events="mapEvents">
     	
-<!--     	<ui-gmap-search-box template="searchbox.template" events="searchbox.events" position="BOTTOM_RIGHT"></ui-gmap-search-box> -->
-
 		<ui-gmap-marker coords="marker0.coords" options="marker0.options" events="marker0.events" idkey="marker0.id">
 		<ui-gmap-marker coords="marker1.coords" options="marker1.options" events="marker1.events" idkey="marker1.id">
 
-        <ui-gmap-polyline 
+		<ui-gmap-polyline 
         	path="connector.path" 
         	stroke="connector.stroke" 
         	visible='connector.visible'
@@ -44,23 +43,23 @@
             icons='connector.icons'
             >
          </ui-gmap-polyline>
-    	
-<!--         <ui-gmap-polyline  -->
-<!--         	path="polyline.path"  -->
-<!--         	stroke="polyline.stroke"  -->
-<!--         	visible='polyline.visible' -->
-<!--             geodesic='polyline.geodesic'  -->
-<!--             fit="false"  -->
-<!--             editable="polyline.editable"  -->
-<!--             draggable="polyline.draggable"  -->
-<!--             icons='polyline.icons' -->
-<!--             events="polyline.events"> -->
-<!--          </ui-gmap-polyline> -->
+
+        <ui-gmap-polyline 
+        	path="polyline.path" 
+        	stroke="polyline.stroke" 
+        	visible='polyline.visible'
+            geodesic='polyline.geodesic' 
+            fit="false" 
+            editable="polyline.editable" 
+            draggable="polyline.draggable" 
+            icons='polyline.icons'
+            events="polyline.events">
+         </ui-gmap-polyline>
     </ui-gmap-google-map>
 
 
 <!--     This section is for controls -->
-	<div class="grid">
+	<div class="controls">
     	<form name="movementForm">    
 		    <div layout-gt-sm="row" class="layout-gt-sm-row">
 		        <md-input-container class="md-block">
@@ -79,7 +78,20 @@
 	        </div>
 		</form>
 	</div>    
-
+	
+	<!--     This section is for the grid -->
+	<script type="text/ng-template" id="simple-grid.html" src="templates/simple-grid.html"></script>
+	<div class="grid-visibility-control">
+		 <a id="show-hide" href="#" ng-click="showHideTable()">Hide</a>
+		 <a href="#" ng-click="addLocation()">Add</a>
+		 <a href="#" ng-click="loadLocationsFile()">Load</a>
+		 <a href="#" id="save-location" ng-click="saveLocationsFile()">Save</a>
+		 <a href="#" ng-click="startReplay()">Play</a>
+		 <input type="checkbox" ng-model="isRepeat" title="Repeat Replay" checked>Repeat</input>
+	</div>
+	<div id="grid-container-div" class="grid-container">
+		<div simple-grid="myGridConfig"></div>
+	</div>
 </div>
 
 <div ng-controller="TimerController">

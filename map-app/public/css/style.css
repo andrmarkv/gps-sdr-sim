@@ -1,68 +1,125 @@
 /* style file */
 html, body, #map_canvas {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
 }
 
 #map_canvas {
-    position: relative;
+	position: relative;
 }
 
 .angular-google-map-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
 }
 
-.grid {
+.controls {
 	width: 400px;
 	height: 30px;
 	background-color: rgba(210, 130, 240, 0.3) !important;
-	position: absolute; 
-	top: 10px; left: 300px; 
+	position: absolute;
+	top: 10px;
+	left: 300px;
 	z-index: 99;
 	text-align: center;
 }
 
-.md-block{
-	margin-top:3px;
-    margin-left:10px;
-    margin-right:10px;
+.md-block {
+	margin-top: 3px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
-.minput{
+.minput {
 	width: 30px;
 	font-family: serif;
 }
 
-.mlabel{
+.mlabel {
 	font-style: normal;
 }
 
-.mbutton{
+.mbutton {
 	width: 50px;
 	font-family: sans-serif;
 	font-weight: bold;
-	margin-left:5px;
-    margin-right:5px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.mbuttonRed{
+.mbuttonRed {
 	width: 50px;
 	font-family: sans-serif;
 	font-weight: bold;
-	color:red;
-	margin-left:5px;
-    margin-right:5px;
+	color: red;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.mbuttonBlue{
+.mbuttonBlue {
 	width: 50px;
 	font-family: sans-serif;
 	font-weight: bold;
-	color:blue;
-	margin-left:5px;
-    margin-right:5px;
+	color: blue;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.mbutton {
+	width: 50px;
+	font-family: sans-serif;
+	font-weight: bold;
+	color: black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.grid-container {
+	width: 400px;
+	height: 400px;
+	background-color: rgba(210, 130, 240, 0.3) !important;
+	position: absolute;
+	top: 100px;
+	left: 10px;
+	z-index: 99;
+	text-align: center;
+}
+
+code {
+	margin: 10px;
+	display: block;
+	overflow: auto;
+}
+
+.grid-container {
+	height: 340px;
+	overflow-y: auto;
+}
+
+.grid-container table {
+	margin: 0;
+}
+
+.grid-visibility-control {
+	width: 350px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 10px;
+	z-index: 99;
+	text-align: left;
+}
+
+.grid-play-control {
+	width: 250px;
+	height: 20px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 99;
+	text-align: center;
+}
