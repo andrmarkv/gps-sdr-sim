@@ -22,6 +22,24 @@ var mapCenter = {
 
 };
 
+function getDistance(lat1, lon1, lat2, lon2) {
+	  var R = 6378137.0; // Radius of the earth in m
+	  var dLat = deg2rad(lat2-lat1);
+	  var dLon = deg2rad(lon2-lon1); 
+	  var a = 
+	    Math.sin(dLat/2) * Math.sin(dLat/2) +
+	    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+	    Math.sin(dLon/2) * Math.sin(dLon/2)
+	    ; 
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	  var d = R * c; // Distance in m
+	  return d;
+	}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
 var socket = io.connect('http://localhost:8000');
 
 var currentPathIndex = 0; //index of the currently active path element
@@ -252,6 +270,32 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			};
 		$scope.myPath.push(newPoint);
 	};
+	
+	$scope.calcTotals = function() {
+		if ($scope.myPath.length < 2) {
+			return 0;
+		}
+		var tl = 0; //Total length of the path
+		var tt = 0; //total seconds to travel distance
+		for (var i = 1; i < $scope.myPath.length; i++) {
+			var tl1 = getDistance(
+					$scope.myPath[i].latitude, 
+					$scope.myPath[i].longitude, 
+					$scope.myPath[i - 1].latitude, 
+					$scope.myPath[i - 1].longitude);
+			
+			var tt1 = tl1 / ($scope.myPath[i - 1].speed / 3.6); //time in m/sec
+			
+			tl = tl + tl1;
+			tt = tt + tt1;
+		}
+		
+		$scope.tl = tl;
+		$scope.tt = tt;
+	};
+	
+	$scope.tl = 0; //Total length of the path
+	$scope.tt = 0; //total seconds to travel distance
 	
 //	$scope.$watch('polyline.path', function (newValue, oldValue, scope) {
 //		alert(1);

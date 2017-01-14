@@ -91,6 +91,11 @@
 	</div>
 	<div id="grid-container-div" class="grid-container">
 		<div simple-grid="myGridConfig"></div>
+		<div class="grid-totals">
+			<a href="#" ng-click="calcTotals()">Calculate</a>
+			Total Length: {{tl | number:0}} (m)
+			Total Time: {{tt | number:0}} (sec)
+		</div>
 	</div>
 </div>
 
