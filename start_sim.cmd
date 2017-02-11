@@ -1,3 +1,6 @@
+ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/016/17n/brdc0160.17n.Z
+ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/brdc/  
+
 ./gps-sdr-sim -s 2500000 -e brdc3500.16n -l 24.506449,54.372192,111
 
 ./gps-sdr-sim -s 2500000 -e brdc3500.16n -T

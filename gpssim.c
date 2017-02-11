@@ -2078,7 +2078,11 @@ int main(int argc, char *argv[])
 	// Allocate visible satellites
 	//double llh[3] = {24.506449, 54.372192, 111};
 	//double llh[3] = {50.393484, 30.516613, 111};
-	double llh[3] = {48.287776, 25.933566, 111};
+	//double llh[3] = {48.287776, 25.933566, 111};
+	//double llh[3] = {45.753136, 21.224145, 111};
+	//double llh[3] = {38.328938, -76.465785, 111};
+	double llh[3] = {48.868279, 24.697502, 111};
+
 	double xyz[3] = {0, 0, 0};
 	/* Update global pointer to current location for other threads*/
 	set_cur_location(llh);

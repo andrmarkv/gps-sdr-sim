@@ -1,26 +1,32 @@
+var center = [48.287776, 25.933566]; //Chernivtsi
+//var center = [24.480085, 54.346342]; //Abu Dhabi
+//var center = [45.753136, 21.224145]; //Timisuary
+//var center = [38.328938, -76.465785]; //Solomons Island
+var center = [48.868279, 24.697502]; //Ivano Frankovsk
+
 var curLocation = {
 	coords : {
-		latitude : 48.287776,
-		longitude : 25.933566,
+		latitude : center[0],
+		longitude : center[1],
 	}
-
 };
 
 var markerLocation = {
 	coords : {
-		latitude : 48.287776,
-		longitude : 25.933566,
+		latitude : center[0],
+		longitude : center[1],
 	}
-
 };
 
 var mapCenter = {
 	coords : {
-		latitude : 48.287776,
-		longitude : 25.933566,
+		latitude : center[0],
+		longitude : center[1],
 	}
-
 };
+
+//Create Base64 Object
+var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
 
 function getDistance(lat1, lon1, lat2, lon2) {
 	  var R = 6378137.0; // Radius of the earth in m
@@ -42,11 +48,12 @@ function deg2rad(deg) {
 
 var socket = io.connect('http://localhost:8000');
 
-var currentPathIndex = 0; //index of the currently active path element
-var isReplayRunning = false; //to indicate if we are processing replay
-var isStopped = false; //to indicate that STOP button was pressed
-var isPaused = false; //to indicate that we are processing pause and not moving
-var readyForNextMotion = false; //to indicate that we can replay next motion
+var currentPathIndex = 0; // index of the currently active path element
+var isReplayRunning = false; // to indicate if we are processing replay
+var isStopped = false; // to indicate that STOP button was pressed
+var isPaused = false; // to indicate that we are processing pause and not
+						// moving
+var readyForNextMotion = false; // to indicate that we can replay next motion
 
 var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps', 'simpleGrid' ]);
 
@@ -75,6 +82,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	$scope.myPath = [];
 	
 	$scope.isRepeat = true;
+	
+	$scope.markers = []; //markers to shows loaded locations
 
 	$scope.myGridConfig = {
 		// should return your data (an array)
@@ -349,7 +358,54 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		}
 	}
 	
-	$scope.loadLocationsFile = function() {
+	$scope.parseLocationFile = function (buf){
+		try{
+			var rootObj = JSON.parse(buf);
+			
+			/*
+			 * Loop over all nested objects extracting encoded attributes
+			 * z3iafj (lat), f24sfvs(lon)
+			 */
+			for (var key in rootObj) {
+			    // skip loop if the property is from prototype
+			    if (!rootObj.hasOwnProperty(key)) continue;
+
+			    var obj = rootObj[key];
+			    
+			    //Decode the String
+			    var decodedString = Base64.decode(obj['z3iafj']);
+			    var lat = (Number(decodedString) / 1.852) / 1e6;
+			    
+			    decodedString = Base64.decode(obj['f24sfvs']);
+			    var lon = (Number(decodedString) / 1.852) / 1e6;
+			    
+			    var newMarker = {
+                    id: Date.now(),
+                    coords: {
+                        latitude: lat,
+                        longitude: lon
+                    },
+                    options : {
+        				draggable : false,
+        				opacity : 0.85,
+        				icon : {
+        					path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+	    	                scale: 1,
+	    	                strokeWeight:2,
+	    	                strokeColor:"#B40404"
+        				},
+        			},
+                };
+			    
+			    $scope.markers.push(newMarker);
+                $scope.$apply();
+			}
+		} catch(err) {
+			return 0;
+		}
+	}
+	
+	$scope.loadMotionFile = function() {
 		var fileSelector = document.createElement('input');
 		fileSelector.setAttribute('type', 'file');
 		fileSelector.addEventListener('change', readSingleFile, false);
@@ -364,6 +420,29 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		      r.onload = function(e) { 
 		    	  var content = e.target.result;
 		    	  $scope.parseLoadedFile(content);
+		      }
+		      r.readAsText(f);
+		    } else { 
+		      alert("Failed to load file");
+		    }
+		  }
+	};
+	
+	$scope.loadLocationsFile = function() {
+		var fileSelector = document.createElement('input');
+		fileSelector.setAttribute('type', 'file');
+		fileSelector.addEventListener('change', readLocationFile, false);
+		fileSelector.click();
+		
+		function readLocationFile(evt) {
+		    //Retrieve the first (and only!) File from the FileList object
+		    var f = evt.target.files[0]; 
+
+		    if (f) {
+		      var r = new FileReader();
+		      r.onload = function(e) { 
+		    	  var content = e.target.result;
+		    	  $scope.parseLocationFile(content);
 		      }
 		      r.readAsText(f);
 		    } else { 
