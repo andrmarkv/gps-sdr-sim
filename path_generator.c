@@ -531,7 +531,7 @@ void* start_udp_server(void *arg) {
 	socklen_t clientlen; /* byte size of client's address */
 	struct sockaddr_in serveraddr; /* server's addr */
 	struct sockaddr_in clientaddr; /* client addr */
-	struct hostent *hostp; /* client host info */
+	//struct hostent *hostp; /* client host info */
 	char buf[BUFSIZE]; /* message in buf */
 	char msg_back[BUFSIZE]; /* message out*/
 	char *hostaddrp; /* dotted decimal host addr string */
@@ -572,13 +572,14 @@ void* start_udp_server(void *arg) {
 	hostaddrp = inet_ntoa(clientaddr.sin_addr);
 	if (hostaddrp == NULL)
 		error("ERROR on inet_ntoa\n");
-	printf("UDP Server started %s:(%d)\n", hostaddrp, portno);
 
 	/*
 	 * bind: associate the parent socket with a port
 	 */
 	if (bind(sockfd, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0)
 		error("ERROR on binding");
+
+	printf("UDP Server started %s:(%d)\n", hostaddrp, portno);
 
 	/*
 	 * main loop: wait for a datagram, then echo it
@@ -595,21 +596,27 @@ void* start_udp_server(void *arg) {
 		n = recvfrom(sockfd, buf, BUFSIZE, 0, (struct sockaddr *) &clientaddr,
 				&clientlen);
 
+		printf("TEST 1\n");
+
 		if (n < 0)
 			error("ERROR in recvfrom");
 
 		/*
 		 * gethostbyaddr: determine who sent the datagram
 		 */
-		hostp = gethostbyaddr((const char *) &clientaddr.sin_addr.s_addr,
-				sizeof(clientaddr.sin_addr.s_addr), AF_INET);
+		//hostp = gethostbyaddr((const char *) &clientaddr.sin_addr.s_addr,
+		//		sizeof(clientaddr.sin_addr.s_addr), AF_INET);
 
-		if (hostp == NULL)
-			error("ERROR on gethostbyaddr");
+		printf("TEST 2\n");
+
+		//if (hostp == NULL)
+		//	error("ERROR on gethostbyaddr");
 
 		hostaddrp = inet_ntoa(clientaddr.sin_addr);
 		if (hostaddrp == NULL)
 			error("ERROR on inet_ntoa\n");
+
+		printf("TEST 3\n");
 
 //		printf("server received %Zu/%d bytes, from %s, data: %s\n", strlen(buf),
 //				n, hostaddrp, buf);
