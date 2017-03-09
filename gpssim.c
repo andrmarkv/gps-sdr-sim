@@ -2154,6 +2154,9 @@ int main(int argc, char *argv[])
 				/* Delete all this path and free memory */
 				del_motion_path(motion);
 				motion = NULL;
+
+				//set finish motion flat to indicate that we finished motion
+				set_finish_motion_flag(1);
 			}
 
 			xyz2llh_decimal(xyz, llh);
@@ -2301,7 +2304,7 @@ int main(int argc, char *argv[])
 //		}
 
 
-		if (igrx%300==0) // Every 30 seconds
+		if (igrx%150==0) // Every 15 seconds
 		{
 			// Update navigation message
 			for (i=0; i<MAX_CHAN; i++)

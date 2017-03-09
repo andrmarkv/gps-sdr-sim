@@ -61,6 +61,8 @@ pthread_mutex_t stop_flag_mutex; //Mutex to control start/stop flag
 t_motions_list *motions_list;
 t_motion cur_loc = { 0 };
 int stop_flag = 0;
+int finish_motion_flag = 0;
+
 
 /*
  * error - wrapper for perror
@@ -163,6 +165,35 @@ int get_stop_flag() {
 	pthread_mutex_lock(&stop_flag_mutex);
 
 	int flag = stop_flag;
+
+	pthread_mutex_unlock(&stop_flag_mutex);
+	return flag;
+}
+
+
+/*
+ * Set up flag to signal that system finished processing motion path
+ * 1 stop flag is set
+ * 0 no stop flag
+ */
+void set_finish_motion_flag(int flag) {
+	pthread_mutex_lock(&stop_flag_mutex);
+
+	finish_motion_flag = flag;
+
+	pthread_mutex_unlock(&stop_flag_mutex);
+	return;
+}
+
+/*
+ * Set up flag to signal that system finished processing motion path
+ * 1 stop flag is set
+ * 0 no stop flag
+ */
+int get_finish_motion_flag() {
+	pthread_mutex_lock(&stop_flag_mutex);
+
+	int flag = finish_motion_flag;
 
 	pthread_mutex_unlock(&stop_flag_mutex);
 	return flag;
@@ -501,8 +532,17 @@ int process_message(char* buf, char* msg_back) {
 	/* If that is get location message - return current location*/
 	pos = findsbstr(buf, "CUR_LOC");
 	if (pos == 0) {
-		sprintf(msg_back, "%s;%lf;%lf;%lf", "LOCATION", cur_loc.llh[0],
+		//Different messages based on the fact if we finished motion or not
+		if(get_finish_motion_flag()){
+			sprintf(msg_back, "%s;%lf;%lf;%lf;FINISHED_MOTION", "LOCATION", cur_loc.llh[0],
 				cur_loc.llh[1], cur_loc.llh[2]);
+
+			//Reset finish motion flat
+			set_finish_motion_flag(0);
+		} else {
+			sprintf(msg_back, "%s;%lf;%lf;%lf;IN_MOTION", "LOCATION", cur_loc.llh[0],
+				cur_loc.llh[1], cur_loc.llh[2]);
+		}
 		return 1;
 	}
 

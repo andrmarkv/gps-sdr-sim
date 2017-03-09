@@ -11,17 +11,25 @@ var io = require('socket.io').listen(server);
 var PORT = 8001;
 var HOST = '127.0.0.1';
 
+//UDP Socket parameters to communicate with Control server
+var PORT2 = 8002;
+var HOST2 = '127.0.0.1';
+
+
+
+//GPS SIMULATOR CLIENT
+
 //Handle UDP Socket response from GPS simulator (confirmation and current location)
 function handleUDPResponse(msg, rinfo){
 	//console.log("got Response: %s", msg);
 	if(msg.indexOf("LOCATION") > -1) {
 		processCurLocation(msg);
-	}
-	if(msg.indexOf("ADDED") > -1) {
+	} else if(msg.indexOf("ADDED") > -1) {
 		console.log("got start moving response: %s", msg);
-	}
-	if(msg.indexOf("STOP") > -1) {
+	} else if(msg.indexOf("STOP") > -1) {
 		console.log("got stop moving response: %s", msg);
+	} else {
+		console.log("got GPS UNKNOWN message: %s", msg);
 	}
 }
 
@@ -34,6 +42,45 @@ function initUDPClient(){
 
 //Client to communicate with GPS simulator 
 var client = initUDPClient();
+
+function sendUDPMessage(message){
+	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+	    if (err) throw err;
+	    //console.log('UDP message sent to ' + HOST +':'+ PORT + " msg: " + message);
+	});
+}
+
+
+//CONTROL CLIENT
+
+//Handle UDP Socket response from Control system (OK to proceed to the next interval)
+function handleUDPControl(msg, rinfo){
+	//console.log("got Response: %s", msg);
+	if(msg.indexOf("OK") > -1) {
+		processControlOK(msg);
+	} else {
+		console.log("got CONTROL UNKNOWN message: %s", msg);
+	}
+}
+
+//Initialize UDP server client to communicate with Control server
+function initUDPClientControl(){
+	var dgram = require('dgram');
+	var client = dgram.createSocket('udp4', handleUDPControl);
+	return client;
+}
+
+//Client to communicate with Control server
+var clientControl = initUDPClientControl();
+
+function sendUDPControlMessage(message){
+	clientControl.send(message, 0, message.length, PORT2, HOST2, function(err, bytes) {
+	    if (err) throw err;
+	    console.log('UDP message sent to ' + HOST2 +':'+ PORT2 + " msg: " + message);
+	});
+}
+
+
 
 app.use(express.static('public'));
 app.get('/index.htm', function (req, res) {
@@ -58,14 +105,13 @@ io.on('connection', function (socket) {
 	  sendUDPMessage("CUR_LOC");
   });
   
+  socket.on('startControl', function (data) {
+	  console.log("got startControl event: %j", data);
+	  var msg = data.tag + ";" + data.latitude + ";" + data.longitude
+	  sendUDPControlMessage("CONTROL;" + msg);
+  });
+  
 });
-
-function sendUDPMessage(message){
-	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
-	    if (err) throw err;
-	    //console.log('UDP message sent to ' + HOST +':'+ PORT + " msg: " + message);
-	});
-}
 
 function processCurLocation(message){
 	var msg = message.toString();
@@ -77,5 +123,12 @@ function processCurLocation(message){
 	
 	if (io) {
 		io.emit('gpsUpdate', { latitude: arr[1], longitude : arr[2] });
+	}
+}
+
+function processControlOK(message){
+	var msg = message.toString();
+	if (io) {
+		io.emit('controlRelese', { message: message });
 	}
 }

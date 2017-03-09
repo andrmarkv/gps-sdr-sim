@@ -54,6 +54,8 @@ var isStopped = false; // to indicate that STOP button was pressed
 var isPaused = false; // to indicate that we are processing pause and not
 						// moving
 var readyForNextMotion = false; // to indicate that we can replay next motion
+var gotOK = false; // Indicator of confirmation to proceed to the next interval
+var controlMessageSent = false; // Indicator giving control to other system
 
 var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps', 'simpleGrid' ]);
 
@@ -72,6 +74,22 @@ function callAtTimeout() {
 	socket.emit('getCurLocation', {});
 }
 
+function sendControlMessage(tag, lat, lon) {
+	controlMessageSent = true;
+	gotOK = false;
+	socket.emit('startControl', {
+		tag : tag,
+		latitude : lat,
+		longitude : lon,
+	});
+}
+
+socket.on('controlRelese', function(data) {
+	console.log("controlRelese message:" + data.message);
+	gotOK = true;
+});
+
+
 myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	$scope.map = {
 		center : mapCenter.coords,
@@ -81,7 +99,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	
 	$scope.myPath = [];
 	
-	$scope.isRepeat = true;
+	$scope.isRepeat = true; //indicates that replay should keep running from beginning after reaching last position
+	$scope.isControlled = false; //indicates that next step of the replay should wait for confirmation to proceed
 	
 	$scope.markers = []; //markers to shows loaded locations
 
@@ -120,9 +139,22 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		if (data.latitude == curLocation.coords.latitude && 
 			data.longitude == curLocation.coords.longitude) {
 			
+			if ($scope.isControlled){ //Indicates that movement controlled by other messages
+				if (!controlMessageSent && readyForNextMotion) {
+					sendControlMessage($scope.myPath[currentPathIndex].tag, data.latitude, data.longitude);
+				} else {
+					if (gotOK && readyForNextMotion){ //Indicates that we got OK to proceed to the next interval
+						if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
+							$scope.replayNextElement();
+						}
+						controlMessageSent = false;
+					}					
+				}
 
-			if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
-				$scope.replayNextElement();
+			} else {
+				if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
+					$scope.replayNextElement();
+				}				
 			}
 		} else {
 			if (!readyForNextMotion) {
@@ -501,6 +533,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		isStopped = false;
 		isPaused = false;
 		readyForNextMotion = true;
+		controlMessageSent = false;
+		gotOK = true;
 	}
 	
 	/*
