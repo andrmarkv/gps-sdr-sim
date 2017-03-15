@@ -29,9 +29,9 @@
     	bounds="map.bounds"
     	events="mapEvents">
     	
+    	<ui-gmap-marker ng-repeat="m in markers" coords="m.coords" options="m.options" idkey="m.id"></ui-gmap-marker>
 		<ui-gmap-marker coords="marker0.coords" options="marker0.options" events="marker0.events" idkey="marker0.id">
 		<ui-gmap-marker coords="marker1.coords" options="marker1.options" events="marker1.events" idkey="marker1.id">
-		<ui-gmap-marker ng-repeat="m in markers" coords="m.coords" options="m.options" idkey="m.id"></ui-gmap-marker>
 
 		<ui-gmap-polyline 
         	path="connector.path" 

@@ -2078,10 +2078,15 @@ int main(int argc, char *argv[])
 	// Allocate visible satellites
 	//double llh[3] = {24.506449, 54.372192, 111};
 	//double llh[3] = {50.393484, 30.516613, 111};
-	double llh[3] = {48.287776, 25.933566, 111};
+	//double llh[3] = {48.287776, 25.933566, 111};
 	//double llh[3] = {45.753136, 21.224145, 111};
 	//double llh[3] = {38.328938, -76.465785, 111};
 	//double llh[3] = {48.868279, 24.697502, 111};
+	//double llh[3] = {49.810482, 23.970609, 111};
+	//double llh[3] = {49.236338, 28.457390, 111};
+	//double llh[3] = {46.484863, 30.734532, 111};
+	//double llh[3] = {48.470909, 35.029497, 111};
+	double llh[3] = {44.617085, 33.523283, 111};
 
 	double xyz[3] = {0, 0, 0};
 	/* Update global pointer to current location for other threads*/
@@ -2304,7 +2309,7 @@ int main(int argc, char *argv[])
 //		}
 
 
-		if (igrx%150==0) // Every 15 seconds
+		if (igrx%300==0) // Every 15 seconds
 		{
 			// Update navigation message
 			for (i=0; i<MAX_CHAN; i++)

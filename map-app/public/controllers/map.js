@@ -1,8 +1,14 @@
-var center = [48.287776, 25.933566]; //Chernivtsi
+//var center = [48.287776, 25.933566]; //Chernivtsi
 //var center = [24.480085, 54.346342]; //Abu Dhabi
 //var center = [45.753136, 21.224145]; //Timisuary
 //var center = [38.328938, -76.465785]; //Solomons Island
 //var center = [48.868279, 24.697502]; //Ivano Frankovsk
+//var center = [49.810482, 23.970609]; //Lviv
+//var center = [49.236338, 28.457390]; //Vinnitsa
+//var center = [46.484863, 30.734532]; //Odessa
+//var center = [48.470909, 35.029497]; //Dnipro
+var center = [44.617085, 33.523283]; //Sevastopol
+
 
 var curLocation = {
 	coords : {
@@ -133,6 +139,15 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	socket.on('gpsUpdate', function(data) {
 		// console.log(data.latitude + " " + data.longitude);
 		
+		tmp = data.status;
+		if (tmp == 'FINISHED_MOTION') {
+			
+		} else if (tmp == 'IN_MOTION'){
+			
+		} else {
+			console.log('Got wrong gpsUpdate status: ' + tmp);
+		}
+		
 		/*
 		 * If we reached end of the segment (coordinates stopped changing)
 		 */
@@ -222,7 +237,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			id : 0,
 			coords : markerLocation.coords,
 			options : {
-				draggable : true
+				draggable : true,
+				zIndex : google.maps.Marker.MAX_ZINDEX + 1,
 			},
 			events : {
 				dragend : function(marker, eventName, args) {

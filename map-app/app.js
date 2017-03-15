@@ -116,13 +116,13 @@ io.on('connection', function (socket) {
 function processCurLocation(message){
 	var msg = message.toString();
 	var arr = msg.split(";");
-	if (arr.length != 4) {
+	if (arr.length != 5) {
 		console.log("Error! Got wrong LOCATION message: " + msg);
 		return;
 	}
 	
 	if (io) {
-		io.emit('gpsUpdate', { latitude: arr[1], longitude : arr[2] });
+		io.emit('gpsUpdate', { latitude: arr[1], longitude : arr[2], status : arr[4] });
 	}
 }
 

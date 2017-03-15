@@ -537,7 +537,7 @@ int process_message(char* buf, char* msg_back) {
 			sprintf(msg_back, "%s;%lf;%lf;%lf;FINISHED_MOTION", "LOCATION", cur_loc.llh[0],
 				cur_loc.llh[1], cur_loc.llh[2]);
 
-			//Reset finish motion flat
+			//Reset finish motion flag
 			set_finish_motion_flag(0);
 		} else {
 			sprintf(msg_back, "%s;%lf;%lf;%lf;IN_MOTION", "LOCATION", cur_loc.llh[0],
