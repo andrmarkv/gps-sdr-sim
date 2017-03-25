@@ -1,0 +1,902 @@
+{
+	"1380741": {
+		"z3iafj": "NjIxODQzMDkuNTMy",
+		"f24sfvs": "LTE0MTY4Njg3LjEwOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0MQ==",
+		"rgqaca": "mosque-ashoker",
+		"rfs21d": "Mosque Ashoker"
+	},
+	"1380854": {
+		"z3iafj": "NjIyMTYxMTUuNzg=",
+		"f24sfvs": "LTE0MTE0Njg4LjM0NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1NA==",
+		"rgqaca": "boulvard-moulay-hassan-1",
+		"rfs21d": "Boulvard Moulay Hassan 1"
+	},
+	"1380758": {
+		"z3iafj": "NjIyMTcyNjQuMDI=",
+		"f24sfvs": "LTE0MTAxNjgxLjc0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1OA==",
+		"rgqaca": "zankat-mohamed-lkori",
+		"rfs21d": "Zankat Mohamed Lkori"
+	},
+	"1380883": {
+		"z3iafj": "NjIyMDk0MjAuOA==",
+		"f24sfvs": "LTE0MTEyNDY5LjY0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4Mw==",
+		"rgqaca": "memorial-martire-ahmede-ben-arrachidi",
+		"rfs21d": "Memorial Martire Ahmede Ben Arrachidi"
+	},
+	"1380899": {
+		"z3iafj": "NjIyMTgxMjcuMDUy",
+		"f24sfvs": "LTE0MTQ0NTYxLjEwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg5OQ==",
+		"rgqaca": "post-du-maroc",
+		"rfs21d": "Post du Maroc"
+	},
+	"1380865": {
+		"z3iafj": "NjIyMTEzODMuOTI=",
+		"f24sfvs": "LTE0MTIwMjA3LjMwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2NQ==",
+		"rgqaca": "cathedrale-sacre-coeur",
+		"rfs21d": "Cath\u00e9drale Sacr\u00e9 Coeur"
+	},
+	"1380697": {
+		"z3iafj": "NjIxODczMDkuNzcy",
+		"f24sfvs": "LTE0MDg3NTI1LjA2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY5Nw==",
+		"rgqaca": "mahkama-fountain",
+		"rfs21d": "Mahkama Fountain"
+	},
+	"1380753": {
+		"z3iafj": "NjIyMTU5MzQuMjg0",
+		"f24sfvs": "LTE0MDkyOTk3Ljcy",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1Mw==",
+		"rgqaca": "koba-marche-centrale",
+		"rfs21d": "Koba March\u00e9 Centrale"
+	},
+	"1380858": {
+		"z3iafj": "NjIyMTUzMTMuODY0",
+		"f24sfvs": "LTE0MTA3NDI4LjUwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1OA==",
+		"rgqaca": "bavoir-16-novembre",
+		"rfs21d": "Bavoir 16 Novembre"
+	},
+	"1380844": {
+		"z3iafj": "NjIyMDc5MDIuMTY=",
+		"f24sfvs": "LTE0MTE1Njc1LjQ2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0NA==",
+		"rgqaca": "dessin-jalije-place-mohamed-5",
+		"rfs21d": "Dessin Jalije Place Mohamed 5"
+	},
+	"1380700": {
+		"z3iafj": "NjIxODgyNzguMzY4",
+		"f24sfvs": "LTE0MDg2OTUyLjc5Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcwMA==",
+		"rgqaca": "tribunal-des-habous",
+		"rfs21d": "Tribunal des Habous"
+	},
+	"1380878": {
+		"z3iafj": "NjIyMTE1NjMuNTY0",
+		"f24sfvs": "LTE0MTA3ODI2LjY4NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3OA==",
+		"rgqaca": "place-d-039-armes",
+		"rfs21d": "Place D&#039;armes"
+	},
+	"1380887": {
+		"z3iafj": "NjIyMzI5MzMuNzky",
+		"f24sfvs": "LTE0MTExMDI4Ljc5Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4Nw==",
+		"rgqaca": "old-canon",
+		"rfs21d": "Old Canon"
+	},
+	"1380841": {
+		"z3iafj": "NjIyMDgwNjYuOTg4",
+		"f24sfvs": "LTE0MTIyMDYxLjE1Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0MQ==",
+		"rgqaca": "tour-moulay-youssef",
+		"rfs21d": "Tour Moulay Youssef"
+	},
+	"1380756": {
+		"z3iafj": "NjIyMjA3NzEuNzA4",
+		"f24sfvs": "LTE0MDkxMDYwLjUyOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1Ng==",
+		"rgqaca": "la-poste-casablanca",
+		"rfs21d": "La Poste Casablanca"
+	},
+	"1380800": {
+		"z3iafj": "NjIxNTY2MTEuMDI=",
+		"f24sfvs": "LTE0MDkyNDMyLjg2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDgwMA==",
+		"rgqaca": "mosquee-sounna",
+		"rfs21d": "Mosqu\u00e9e Sounna"
+	},
+	"1380890": {
+		"z3iafj": "NjIxNjc5NDcuMTEy",
+		"f24sfvs": "LTE0MTkyNzI5Ljc3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg5MA==",
+		"rgqaca": "mosque-cil",
+		"rfs21d": "Mosque CIL"
+	},
+	"1380855": {
+		"z3iafj": "NjIyMDkzNDEuMTY0",
+		"f24sfvs": "LTE0MTA5MzI0Ljk1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1NQ==",
+		"rgqaca": "consulat-de-france",
+		"rfs21d": "Consulat De France"
+	},
+	"1380712": {
+		"z3iafj": "NjIyMTE4MTEuNzMy",
+		"f24sfvs": "LTE0MDcwMTM4LjQ4NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcxMg==",
+		"rgqaca": "theatre-mohamed-vi",
+		"rfs21d": "Th\u00e9\u00e2tre Mohamed VI"
+	},
+	"1380870": {
+		"z3iafj": "NjIyMjEzMjcuMzA4",
+		"f24sfvs": "LTE0MTEwMDYzLjk=",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3MA==",
+		"rgqaca": "casablanca-039-s-medina-by-night",
+		"rfs21d": "Casablanca&#039;s Medina by night"
+	},
+	"1380770": {
+		"z3iafj": "NjIyMDExNDkuNzY4",
+		"f24sfvs": "LTE0MDkyMjY0LjMyOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc3MA==",
+		"rgqaca": "mosquee-benjdia",
+		"rfs21d": "Mosqu\u00e9e Benjdia"
+	},
+	"1380871": {
+		"z3iafj": "NjIyMDk2NzAuODI=",
+		"f24sfvs": "LTE0MTE2Nzk5LjYyNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3MQ==",
+		"rgqaca": "miroir-magic",
+		"rfs21d": "Miroir Magic"
+	},
+	"1380892": {
+		"z3iafj": "NjIxOTMyOTUuNDM2",
+		"f24sfvs": "LTE0MTU5NjAzLjA0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg5Mg==",
+		"rgqaca": "complexe-sportif-mohamed-5",
+		"rfs21d": "Complexe Sportif Mohamed 5"
+	},
+	"1380804": {
+		"z3iafj": "NjIyMjE1MzQuNzMy",
+		"f24sfvs": "LTE0MTk2NDUwLjQ0",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDgwNA==",
+		"rgqaca": "mosque-al-saoud",
+		"rfs21d": "Mosque Al Saoud"
+	},
+	"1380801": {
+		"z3iafj": "NjIxNzA1NzMuMjQ4",
+		"f24sfvs": "LTE0MDk1NTc1LjcwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDgwMQ==",
+		"rgqaca": "poste-l-039-houda",
+		"rfs21d": "Poste L&#039;Houda"
+	},
+	"1380817": {
+		"z3iafj": "NjIxNjUzMzAuMjM2",
+		"f24sfvs": "LTE0MTU2NDk3LjI0NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDgxNw==",
+		"rgqaca": "mosque-albatha",
+		"rfs21d": "Mosque Albatha"
+	},
+	"1380748": {
+		"z3iafj": "NjIyMDIzMDcuMjY4",
+		"f24sfvs": "LTE0MTM1MDQ5LjIzMg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0OA==",
+		"rgqaca": "twin-center",
+		"rfs21d": "Twin Center"
+	},
+	"1380849": {
+		"z3iafj": "NjIyMTA0OTEuMjU2",
+		"f24sfvs": "LTE0MTEwNTIxLjM0NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0OQ==",
+		"rgqaca": "place-mohamad-5",
+		"rfs21d": "Place Mohamad 5"
+	},
+	"1380850": {
+		"z3iafj": "NjIyMTM3NDMuMzY4",
+		"f24sfvs": "LTE0MTEwNDUwLjk2OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1MA==",
+		"rgqaca": "poste-du-maroc",
+		"rfs21d": "Poste Du Maroc"
+	},
+	"1380880": {
+		"z3iafj": "NjIyMTA2OTguNjg=",
+		"f24sfvs": "LTE0MTE3MDI5LjI3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4MA==",
+		"rgqaca": "fontaine-de-la-memoire",
+		"rfs21d": "Fontaine De La M\u00e9moire"
+	},
+	"1380888": {
+		"z3iafj": "NjIyMjk5MDkuNDc2",
+		"f24sfvs": "LTE0MTA5MzYxLjk5Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4OA==",
+		"rgqaca": "mosquee-almohade",
+		"rfs21d": "Mosqu\u00e9e Almohade"
+	},
+	"1380872": {
+		"z3iafj": "NjIyMDk3MTcuMTI=",
+		"f24sfvs": "LTE0MTEwMTAyLjc5Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3Mg==",
+		"rgqaca": "wilaya-of-greater-casablanca",
+		"rfs21d": "Wilaya of Greater Casablanca"
+	},
+	"1380734": {
+		"z3iafj": "NjIxNzA0MTcuNjg=",
+		"f24sfvs": "LTE0MTI0MDA3LjYwOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDczNA==",
+		"rgqaca": "anoual-capital-center",
+		"rfs21d": "Anoual Capital Center"
+	},
+	"1380884": {
+		"z3iafj": "NjIyMjg0NjQuOTE2",
+		"f24sfvs": "LTE0MTA3NTgyLjIy",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4NA==",
+		"rgqaca": "iron-anker",
+		"rfs21d": "Iron Anker"
+	},
+	"1380739": {
+		"z3iafj": "NjIyMjY1MDcuMzUy",
+		"f24sfvs": "LTE0MDk5MzY0Ljg5Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDczOQ==",
+		"rgqaca": "gare-de-casa-port",
+		"rfs21d": "Gare De Casa Port"
+	},
+	"1380852": {
+		"z3iafj": "NjIyMTQ4OTEuNjA4",
+		"f24sfvs": "LTE0MTA5OTc4LjcwOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1Mg==",
+		"rgqaca": "librairie-la-provence",
+		"rfs21d": "Librairie La Provence"
+	},
+	"1380851": {
+		"z3iafj": "NjIyMTg2ODIuNjUy",
+		"f24sfvs": "LTE0MTE0NDg4LjMyOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1MQ==",
+		"rgqaca": "church",
+		"rfs21d": "Church"
+	},
+	"1380769": {
+		"z3iafj": "NjIxNzg4MTQuNjQ4",
+		"f24sfvs": "LTE0MTE5NzYwLjk3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc2OQ==",
+		"rgqaca": "statue-de-louis-pasteur",
+		"rfs21d": "Statue de Louis Pasteur"
+	},
+	"1380761": {
+		"z3iafj": "NjIyMjE5ODQuNzY4",
+		"f24sfvs": "LTE0MDkyMDAxLjM0NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc2MQ==",
+		"rgqaca": "telega",
+		"rfs21d": "\u0422\u0435\u043b\u0435\u0433\u0430"
+	},
+	"1380750": {
+		"z3iafj": "NjIyMTU1MTAuMTc2",
+		"f24sfvs": "LTE0MDg3OTM0LjM1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1MA==",
+		"rgqaca": "foot",
+		"rfs21d": "Foot"
+	},
+	"1380754": {
+		"z3iafj": "NjIyMTQ4NDUuMzA4",
+		"f24sfvs": "LTE0MDg2MDAyLjcxNg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1NA==",
+		"rgqaca": "dinossauros",
+		"rfs21d": "Dinossauros"
+	},
+	"1380771": {
+		"z3iafj": "NjIxOTUyNjcuODE2",
+		"f24sfvs": "LTE0MTAzNjg5LjMxNg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc3MQ==",
+		"rgqaca": "eglise-notre-dame-de-lourdes",
+		"rfs21d": "Eglise Notre Dame De Lourdes "
+	},
+	"1380842": {
+		"z3iafj": "NjIyMDYyNTAuMTc2",
+		"f24sfvs": "LTE0MTE5NjIzLjkyNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0Mg==",
+		"rgqaca": "fontaine-du-park",
+		"rfs21d": "Fontaine Du Park"
+	},
+	"1380859": {
+		"z3iafj": "NjIyMDk4ODEuOTQ4",
+		"f24sfvs": "LTE0MTExOTcxLjQ2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1OQ==",
+		"rgqaca": "conseil-de-la-ville-de-casablanca",
+		"rfs21d": "Conseil De La Ville De Casablanca"
+	},
+	"1380685": {
+		"z3iafj": "NjIxODYxODEuOTA0",
+		"f24sfvs": "LTE0MDgzNTA0LjM2OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY4NQ==",
+		"rgqaca": "fontaine-stone-habous",
+		"rfs21d": "Fontaine Stone Habous"
+	},
+	"1380864": {
+		"z3iafj": "NjIyMDkzMzAuMDUy",
+		"f24sfvs": "LTE0MTI0MDY1LjAy",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2NA==",
+		"rgqaca": "tijariwafa-banque",
+		"rfs21d": "Tijariwafa Banque"
+	},
+	"1380749": {
+		"z3iafj": "NjIxOTQ1NjQuMDU2",
+		"f24sfvs": "LTE0MTI2NDE3LjA2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0OQ==",
+		"rgqaca": "espace-mohammed-abdou",
+		"rfs21d": "Espace Mohammed Abdou"
+	},
+	"1380735": {
+		"z3iafj": "NjIxODk1NzguNDcy",
+		"f24sfvs": "LTE0MTE5MjM4LjcwOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDczNQ==",
+		"rgqaca": "mosquee-pasteur",
+		"rfs21d": "Mosqu\u00e9e Pasteur"
+	},
+	"1380694": {
+		"z3iafj": "NjIyMTAzNjkuMDI0",
+		"f24sfvs": "LTE0MTUxMjY3LjE5Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY5NA==",
+		"rgqaca": "eglise-anfa-maarif",
+		"rfs21d": "\u00c9glise Anfa Ma\u00e2rif"
+	},
+	"1380885": {
+		"z3iafj": "NjIyMzI4MjQuNTI0",
+		"f24sfvs": "LTE0MTEwNDMyLjQ0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4NQ==",
+		"rgqaca": "al-kalaa-marina",
+		"rfs21d": "Al Kalaa Marina"
+	},
+	"1380876": {
+		"z3iafj": "NjIyMTA1MTEuNjI4",
+		"f24sfvs": "LTE0MTA4MzU2LjM1Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3Ng==",
+		"rgqaca": "tribunal-de-premiere-instance",
+		"rfs21d": "Tribunal De Premiere Instance"
+	},
+	"1380898": {
+		"z3iafj": "NjIyMDg3NjUuMTky",
+		"f24sfvs": "LTE0MTQ1ODYzLjA2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg5OA==",
+		"rgqaca": "statut-chevalier-marocain",
+		"rfs21d": "Statut Chevalier Marocain"
+	},
+	"1380716": {
+		"z3iafj": "NjIxNjY3NjEuODMy",
+		"f24sfvs": "LTE0MDg0MDE5LjIyNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcxNg==",
+		"rgqaca": "la-poste",
+		"rfs21d": "La Poste "
+	},
+	"1380746": {
+		"z3iafj": "NjIyMDQ5OTguMjI0",
+		"f24sfvs": "LTE0MTMwNjMyLjIxMg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0Ng==",
+		"rgqaca": "star-of-maarif",
+		"rfs21d": "Star Of Maarif"
+	},
+	"1380696": {
+		"z3iafj": "NjIxODc4MDkuODEy",
+		"f24sfvs": "LTE0MTAwMDU5LjM5Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY5Ng==",
+		"rgqaca": "jardin-issisko",
+		"rfs21d": "Jardin Issisko"
+	},
+	"1380863": {
+		"z3iafj": "NjIyMDg5MjQuNDY0",
+		"f24sfvs": "LTE0MTIwNjIwLjM=",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2Mw==",
+		"rgqaca": "institut-cervantes",
+		"rfs21d": "Institut Cervantes"
+	},
+	"1380751": {
+		"z3iafj": "NjIyMTYyODguMDE2",
+		"f24sfvs": "LTE0MTAzODI4LjIxNg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1MQ==",
+		"rgqaca": "traffic-sign-tree-rue-ghali-ahmed",
+		"rfs21d": "Traffic Sign Tree Rue Ghali Ahmed "
+	},
+	"1380684": {
+		"z3iafj": "NjIxODc2MjguMzE2",
+		"f24sfvs": "LTE0MDgzMjQ2Ljk0",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY4NA==",
+		"rgqaca": "arc-houbous",
+		"rfs21d": "Arc Houbous"
+	},
+	"1380686": {
+		"z3iafj": "NjIxODYyMzkuMzE2",
+		"f24sfvs": "LTE0MDgzOTI0Ljc3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY4Ng==",
+		"rgqaca": "fontaine-habous",
+		"rfs21d": "Fontaine Habous"
+	},
+	"1380699": {
+		"z3iafj": "NjIxNzQzMTYuMTQ=",
+		"f24sfvs": "LTE0MTA0MjQ2Ljc2OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY5OQ==",
+		"rgqaca": "mosque-driss-1",
+		"rfs21d": "Mosque Driss 1"
+	},
+	"1380755": {
+		"z3iafj": "NjIyMjMxNjIuNjQ=",
+		"f24sfvs": "LTE0MTA0Mzg5LjM3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1NQ==",
+		"rgqaca": "portail-du-maroc",
+		"rfs21d": "Portail Du Maroc"
+	},
+	"1380860": {
+		"z3iafj": "NjIyMjIwMDMuMjg4",
+		"f24sfvs": "LTE0MTA4NjQxLjU2NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2MA==",
+		"rgqaca": "mosque-ancienne-medina",
+		"rfs21d": "Mosqu\u00e9 Ancienne Medina"
+	},
+	"1380891": {
+		"z3iafj": "NjIxNzE5MzAuNzY0",
+		"f24sfvs": "LTE0MTQyMjI3LjU4NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg5MQ==",
+		"rgqaca": "mosquee-addoha",
+		"rfs21d": "Mosquee Addoha"
+	},
+	"1380900": {
+		"z3iafj": "NjIyMDk3MTEuNTY0",
+		"f24sfvs": "LTE0MTI3NTYzLjQ0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDkwMA==",
+		"rgqaca": "f-o-l",
+		"rfs21d": "F.O.L"
+	},
+	"1380737": {
+		"z3iafj": "NjIyMjQ1NjQuNjA0",
+		"f24sfvs": "LTE0MDk2NzEwLjk4",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDczNw==",
+		"rgqaca": "gare-casaport",
+		"rfs21d": "Gare Casaport"
+	},
+	"1380867": {
+		"z3iafj": "NjIyMTQwNzguNTg=",
+		"f24sfvs": "LTE0MTA5MTM5Ljc1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2Nw==",
+		"rgqaca": "bank-al-maghrib-moroccan-bank",
+		"rfs21d": "Bank Al Maghrib - Moroccan BANK"
+	},
+	"1380752": {
+		"z3iafj": "NjIyMTcwOTkuMTky",
+		"f24sfvs": "LTE0MDk3NTQ4LjA4NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1Mg==",
+		"rgqaca": "marche-centrale",
+		"rfs21d": "March\u00e9 Centrale"
+	},
+	"1380768": {
+		"z3iafj": "NjIyMjk4NjUuMDI4",
+		"f24sfvs": "LTE0MTYyMzczLjY0",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc2OA==",
+		"rgqaca": "terrain-foot-el-hanlk",
+		"rfs21d": "Terrain Foot el hanlk"
+	},
+	"1380845": {
+		"z3iafj": "NjIyMTM4MjEuMTUy",
+		"f24sfvs": "LTE0MTI0NDAwLjIzMg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0NQ==",
+		"rgqaca": "fontaine-sogetel",
+		"rfs21d": "Fontaine Sogetel"
+	},
+	"1380743": {
+		"z3iafj": "NjIxOTk5MDcuMDc2",
+		"f24sfvs": "LTE0MTQwMjg4LjU0",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0Mw==",
+		"rgqaca": "mosquee-andalos",
+		"rfs21d": "Mosqu\u00e9e Andalos"
+	},
+	"1380879": {
+		"z3iafj": "NjIyMTEwMzcuNTk2",
+		"f24sfvs": "LTE0MTEwMDc2Ljg2NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3OQ==",
+		"rgqaca": "cannon-place-mohamed-5",
+		"rfs21d": "Cannon Place Mohamed 5"
+	},
+	"1380757": {
+		"z3iafj": "NjIyMTcxNDEuNzg4",
+		"f24sfvs": "LTE0MDk5NDY0LjkwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc1Nw==",
+		"rgqaca": "la-poste-marche-centrale",
+		"rfs21d": "La Poste March\u00e9 Centrale"
+	},
+	"1380795": {
+		"z3iafj": "NjIxNjQzMzcuNTY0",
+		"f24sfvs": "LTE0MDk4NzY4LjU1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc5NQ==",
+		"rgqaca": "inscription-parc-ermitage",
+		"rfs21d": "Inscription Parc Ermitage"
+	},
+	"1380882": {
+		"z3iafj": "NjIyMTEzNzAuOTU2",
+		"f24sfvs": "LTE0MTExMjQxLjc3Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4Mg==",
+		"rgqaca": "fontaine-place-mohamed-5",
+		"rfs21d": "Fontaine Place Mohamed 5"
+	},
+	"1380747": {
+		"z3iafj": "NjIyMDMwMzYuOTU2",
+		"f24sfvs": "LTE0MTI3ODkzLjEwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0Nw==",
+		"rgqaca": "cercle-municipal-de-casablanca",
+		"rfs21d": "Cercle Municipal de Casablanca"
+	},
+	"1380710": {
+		"z3iafj": "NjIyMTg5MjUuMjY0",
+		"f24sfvs": "LTE0MDY5MDc5LjE0",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcxMA==",
+		"rgqaca": "mosquee-taqwa",
+		"rfs21d": "Mosquee Taqwa"
+	},
+	"1380687": {
+		"z3iafj": "NjIxODY4ODEuOTY=",
+		"f24sfvs": "LTE0MDg0MzM5LjYy",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDY4Nw==",
+		"rgqaca": "mosquee-my-youssef",
+		"rfs21d": "Mosqu\u00e9e My Youssef"
+	},
+	"1380740": {
+		"z3iafj": "NjIyMzU3MDIuNTMy",
+		"f24sfvs": "LTE0MTcxNDgzLjYyOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc0MA==",
+		"rgqaca": "masjid-almanar-el-hank",
+		"rfs21d": "Masjid Almanar El Hank"
+	},
+	"1380738": {
+		"z3iafj": "NjIyMjU0ODYuOQ==",
+		"f24sfvs": "LTE0MTAxNTg5LjE0OA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDczOA==",
+		"rgqaca": "fontaine-casa-port",
+		"rfs21d": "Fontaine Casa Port"
+	},
+	"1380762": {
+		"z3iafj": "NjIyMTk3MTQuMjE2",
+		"f24sfvs": "LTE0MDk3OTU1LjUyNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc2Mg==",
+		"rgqaca": "arbre-de-pierre",
+		"rfs21d": "Arbre De Pierre"
+	},
+	"1380799": {
+		"z3iafj": "NjIxNjI0MTEuNDg0",
+		"f24sfvs": "LTE0MDk2OTMzLjIy",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc5OQ==",
+		"rgqaca": "hermitage",
+		"rfs21d": "Hermitage"
+	},
+	"1380877": {
+		"z3iafj": "NjIyMTI0NjMuNjM2",
+		"f24sfvs": "LTE0MTA4ODkzLjQzNg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg3Nw==",
+		"rgqaca": "memorial-des-victimes-du-16-mai",
+		"rfs21d": "Memorial Des Victimes Du 16 Mai"
+	},
+	"1380846": {
+		"z3iafj": "NjIyMTMyNTIuNTg4",
+		"f24sfvs": "LTE0MTA5MzE5LjM5Ng==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0Ng==",
+		"rgqaca": "stone-clock-of-place-mohamed-5",
+		"rfs21d": "Stone Clock of Place Mohamed 5"
+	},
+	"1380857": {
+		"z3iafj": "NjIyMTIwMjQuNzEy",
+		"f24sfvs": "LTE0MTIxMTc3Ljc1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg1Nw==",
+		"rgqaca": "villa",
+		"rfs21d": "Villa"
+	},
+	"1380728": {
+		"z3iafj": "NjIyMzY3ODIuMjQ4",
+		"f24sfvs": "LTE0MTMwMTI2LjYxNg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcyOA==",
+		"rgqaca": "foire-internationnal-de-casablanca",
+		"rfs21d": "Foire Internationnal De Casablanca"
+	},
+	"1380843": {
+		"z3iafj": "NjIyMTcwNzEuNDEy",
+		"f24sfvs": "LTE0MTA2NDY1LjQ2NA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg0Mw==",
+		"rgqaca": "16novembre",
+		"rfs21d": "16novembre"
+	},
+	"1380796": {
+		"z3iafj": "NjIxNjAyMjkuODI4",
+		"f24sfvs": "LTE0MDk4NzI5LjY2",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDc5Ng==",
+		"rgqaca": "statue-lion",
+		"rfs21d": "Statue Lion "
+	},
+	"1380866": {
+		"z3iafj": "NjIyMTQ0NzMuMDU2",
+		"f24sfvs": "LTE0MTA3MDExLjgwNA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg2Ng==",
+		"rgqaca": "esjc",
+		"rfs21d": "ESJC "
+	},
+	"1380881": {
+		"z3iafj": "NjIyMTM4NjMuNzQ4",
+		"f24sfvs": "LTE0MTA4NDQ1LjI1Mg==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDg4MQ==",
+		"rgqaca": "plaque-memorial-ben-hrizi",
+		"rfs21d": "Plaque M\u00e9morial Ben Hrizi"
+	},
+	"1380709": {
+		"z3iafj": "NjIxNDI5ODUuODU2",
+		"f24sfvs": "LTE0MTMzNDI1LjAyOA==",
+		"g74jsdg": "MA==",
+		"xgxg35": "MQ==",
+		"y74hda": "MQ==",
+		"zfgs62": "MTM4MDcwOQ==",
+		"rgqaca": "oasis",
+		"rfs21d": "Oasis "
+	}
+}
