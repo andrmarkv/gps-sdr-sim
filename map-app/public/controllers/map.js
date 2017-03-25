@@ -7,7 +7,10 @@
 //var center = [49.236338, 28.457390]; //Vinnitsa
 //var center = [46.484863, 30.734532]; //Odessa
 //var center = [48.470909, 35.029497]; //Dnipro
-var center = [44.617085, 33.523283]; //Sevastopol
+//var center = [44.617085, 33.523283]; //Sevastopol
+//var center = [33.592476, -7.620509]; //Casablanka
+//var center = [33.592476, -7.620509]; //Casablanka
+var center = [28.130413, -15.449473]; //Las-Palmas
 
 
 var curLocation = {
@@ -57,11 +60,12 @@ var socket = io.connect('http://localhost:8000');
 var currentPathIndex = 0; // index of the currently active path element
 var isReplayRunning = false; // to indicate if we are processing replay
 var isStopped = false; // to indicate that STOP button was pressed
-var isPaused = false; // to indicate that we are processing pause and not
 						// moving
 var readyForNextMotion = false; // to indicate that we can replay next motion
 var gotOK = false; // Indicator of confirmation to proceed to the next interval
-var controlMessageSent = false; // Indicator giving control to other system
+
+//To handle state changes from moving to stopped and back
+var curState = 0; //0 - stopped, 1 - moving
 
 var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps', 'simpleGrid' ]);
 
@@ -81,17 +85,17 @@ function callAtTimeout() {
 }
 
 function sendControlMessage(tag, lat, lon) {
-	controlMessageSent = true;
 	gotOK = false;
 	socket.emit('startControl', {
 		tag : tag,
 		latitude : lat,
 		longitude : lon,
 	});
+	console.log("sendControlMessage done, tag: " + tag);
 }
 
 socket.on('controlRelese', function(data) {
-	console.log("controlRelese message:" + data.message);
+	console.log("controlRelese state:" + data.state);
 	gotOK = true;
 });
 
@@ -138,42 +142,52 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	
 	socket.on('gpsUpdate', function(data) {
 		// console.log(data.latitude + " " + data.longitude);
+		stateChanged = false; //indicates state change
 		
 		tmp = data.status;
-		if (tmp == 'FINISHED_MOTION') {
+		if (tmp == 'STOPPED') {
+			console.log('Got STOPPED gpsUpdate status');
 			
-		} else if (tmp == 'IN_MOTION'){
+			//Check if state changed from stopped/moving
+			if(curState == 1){
+				curState = 0;
+				stateChanged = true;
+			}
+		} else if (tmp == 'MOVING'){
+			console.log('Got MOVING gpsUpdate status');
 			
+			//Check if state changed from stopped/moving
+			if(curState == 0){
+				curState = 1;
+				stateChanged = true;
+			}
 		} else {
 			console.log('Got wrong gpsUpdate status: ' + tmp);
 		}
 		
-		/*
-		 * If we reached end of the segment (coordinates stopped changing)
-		 */
-		if (data.latitude == curLocation.coords.latitude && 
-			data.longitude == curLocation.coords.longitude) {
-			
-			if ($scope.isControlled){ //Indicates that movement controlled by other messages
-				if (!controlMessageSent && readyForNextMotion) {
-					sendControlMessage($scope.myPath[currentPathIndex].tag, data.latitude, data.longitude);
+		//Handle state changed from moving to stopped
+		if (stateChanged) {
+			if (curState == 0) {
+				if ($scope.isControlled){ //Indicates that movement controlled by other messages
+					if (isReplayRunning && $scope.myPath.length > 0) {	
+						sendControlMessage($scope.myPath[currentPathIndex].tag, data.latitude, data.longitude);
+					}
 				} else {
-					if (gotOK && readyForNextMotion){ //Indicates that we got OK to proceed to the next interval
-						if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
-							$scope.replayNextElement();
-						}
-						controlMessageSent = false;
-					}					
+					if (isReplayRunning) {
+						$scope.replayNextElement();
+					}
 				}
-
-			} else {
-				if (isReplayRunning && !isStopped && !isPaused && readyForNextMotion) {
-					$scope.replayNextElement();
-				}				
 			}
-		} else {
-			if (!readyForNextMotion) {
-				readyForNextMotion = true; //we detected initiation of the move	
+		}
+		
+		//Check if we got OK from the control server
+		if (curState == 0) {
+			if ($scope.isControlled){ //Indicates that movement controlled by other messages
+				if (gotOK){ //Indicates that we got OK to proceed to the next interval
+					if (isReplayRunning) {
+						$scope.replayNextElement();
+					}
+				}
 			}
 		}
 		
@@ -292,7 +306,6 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	$scope.stopMoving = function() {
 		isStopped = true;
 		isReplayRunning = false;
-		isPaused = false;
 		socket.emit('stopMoving', {});
 	};
 
@@ -547,9 +560,7 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		
 		isReplayRunning = true;
 		isStopped = false;
-		isPaused = false;
 		readyForNextMotion = true;
-		controlMessageSent = false;
 		gotOK = true;
 	}
 	
@@ -589,7 +600,6 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 		//If we have to introduce a pause
 //		alert("before pause");
 
-		isPaused = true; //to indicate that we entered pause
 		setTimeout(function(){
 			//alert("execution of the detalyed function starts, tag: " + tag);
 			
@@ -608,7 +618,6 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				pause : pause,
 			});
 			
-			isPaused = false; //to indicate that we should start moving
 		}, pause * 1000);
 		
 //		alert("after pause");

@@ -56,8 +56,8 @@ function sendUDPMessage(message){
 //Handle UDP Socket response from Control system (OK to proceed to the next interval)
 function handleUDPControl(msg, rinfo){
 	//console.log("got Response: %s", msg);
-	if(msg.indexOf("OK") > -1) {
-		processControlOK(msg);
+	if(msg.indexOf("CONTROL") > -1) {
+		processControl(msg);
 	} else {
 		console.log("got CONTROL UNKNOWN message: %s", msg);
 	}
@@ -126,9 +126,20 @@ function processCurLocation(message){
 	}
 }
 
-function processControlOK(message){
+function processControl(message){
 	var msg = message.toString();
-	if (io) {
-		io.emit('controlRelese', { message: message });
+	var arr = msg.split(";");
+	
+	if (arr.length != 3) {
+		console.log("Error! Got wrong CONTROL message: " + msg);
+		return;
 	}
+	
+	if (io) {
+		io.emit('controlRelese', { state: arr[2]});
+	}
+	
+//	console.log("processControl msg: " + msg);
+//	console.log("processControl msg.state: " + msg.state);
+
 }

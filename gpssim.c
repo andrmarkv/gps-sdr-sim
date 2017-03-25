@@ -2086,7 +2086,9 @@ int main(int argc, char *argv[])
 	//double llh[3] = {49.236338, 28.457390, 111};
 	//double llh[3] = {46.484863, 30.734532, 111};
 	//double llh[3] = {48.470909, 35.029497, 111};
-	double llh[3] = {44.617085, 33.523283, 111};
+	//double llh[3] = {44.617085, 33.523283, 111};
+	//double llh[3] = {33.592476, -7.620509, 111};
+	double llh[3] = {28.130413, -15.449473, 111};
 
 	double xyz[3] = {0, 0, 0};
 	/* Update global pointer to current location for other threads*/
@@ -2160,8 +2162,10 @@ int main(int argc, char *argv[])
 				del_motion_path(motion);
 				motion = NULL;
 
-				//set finish motion flat to indicate that we finished motion
-				set_finish_motion_flag(1);
+				//set stop flat to indicate that we finished motion
+				set_stop_flag(1);
+//				set_finish_motion_flag(1);
+
 			}
 
 			xyz2llh_decimal(xyz, llh);
@@ -2309,7 +2313,7 @@ int main(int argc, char *argv[])
 //		}
 
 
-		if (igrx%300==0) // Every 15 seconds
+		if (igrx%300==0) // Every 30 seconds
 		{
 			// Update navigation message
 			for (i=0; i<MAX_CHAN; i++)

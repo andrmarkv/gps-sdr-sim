@@ -26,7 +26,7 @@ void hexDump(char *desc, void *addr, int len);
 void set_cur_location(double llh[]);
 void set_stop_flag(int flag);
 int get_stop_flag();
-void set_finish_motion_flag(int flag);
-int get_finish_motion_flag();
+//void set_finish_motion_flag(int flag);
+//int get_finish_motion_flag();
 
 #endif

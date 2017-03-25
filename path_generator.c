@@ -60,8 +60,7 @@ pthread_mutex_t stop_flag_mutex; //Mutex to control start/stop flag
 
 t_motions_list *motions_list;
 t_motion cur_loc = { 0 };
-int stop_flag = 0;
-int finish_motion_flag = 0;
+int stop_flag = 1;
 
 
 /*
@@ -171,33 +170,33 @@ int get_stop_flag() {
 }
 
 
-/*
- * Set up flag to signal that system finished processing motion path
- * 1 stop flag is set
- * 0 no stop flag
- */
-void set_finish_motion_flag(int flag) {
-	pthread_mutex_lock(&stop_flag_mutex);
+///*
+// * Set up flag to signal that system finished processing motion path
+// * 1 stop flag is set
+// * 0 no stop flag
+// */
+//void set_finish_motion_flag(int flag) {
+//	pthread_mutex_lock(&stop_flag_mutex);
+//
+//	finish_motion_flag = flag;
+//
+//	pthread_mutex_unlock(&stop_flag_mutex);
+//	return;
+//}
 
-	finish_motion_flag = flag;
-
-	pthread_mutex_unlock(&stop_flag_mutex);
-	return;
-}
-
-/*
- * Set up flag to signal that system finished processing motion path
- * 1 stop flag is set
- * 0 no stop flag
- */
-int get_finish_motion_flag() {
-	pthread_mutex_lock(&stop_flag_mutex);
-
-	int flag = finish_motion_flag;
-
-	pthread_mutex_unlock(&stop_flag_mutex);
-	return flag;
-}
+///*
+// * Set up flag to signal that system finished processing motion path
+// * 1 stop flag is set
+// * 0 no stop flag
+// */
+//int get_finish_motion_flag() {
+//	pthread_mutex_lock(&stop_flag_mutex);
+//
+//	int flag = finish_motion_flag;
+//
+//	pthread_mutex_unlock(&stop_flag_mutex);
+//	return flag;
+//}
 
 /*
  * Add new motion path to the list of motions
@@ -526,6 +525,9 @@ int process_message(char* buf, char* msg_back) {
 		/* clear stop flag */
 		set_stop_flag(0);
 
+//		//clear finish motion flag to indicate that we are in motion
+//		set_finish_motion_flag(0);
+
 		return 1;
 	}
 
@@ -533,14 +535,11 @@ int process_message(char* buf, char* msg_back) {
 	pos = findsbstr(buf, "CUR_LOC");
 	if (pos == 0) {
 		//Different messages based on the fact if we finished motion or not
-		if(get_finish_motion_flag()){
-			sprintf(msg_back, "%s;%lf;%lf;%lf;FINISHED_MOTION", "LOCATION", cur_loc.llh[0],
+		if(get_stop_flag()){
+			sprintf(msg_back, "%s;%lf;%lf;%lf;STOPPED", "LOCATION", cur_loc.llh[0],
 				cur_loc.llh[1], cur_loc.llh[2]);
-
-			//Reset finish motion flag
-			set_finish_motion_flag(0);
 		} else {
-			sprintf(msg_back, "%s;%lf;%lf;%lf;IN_MOTION", "LOCATION", cur_loc.llh[0],
+			sprintf(msg_back, "%s;%lf;%lf;%lf;MOVING", "LOCATION", cur_loc.llh[0],
 				cur_loc.llh[1], cur_loc.llh[2]);
 		}
 		return 1;
@@ -552,6 +551,7 @@ int process_message(char* buf, char* msg_back) {
 		printf("got STOP message\n");
 		clear_pending_movements();
 		set_stop_flag(1);
+//		set_finish_motion_flag(1);
 		sprintf(msg_back, "%s", "STOP OK");
 		return 1;
 	}
