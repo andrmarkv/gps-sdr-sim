@@ -18,3 +18,31 @@ hackrf_transfer -t gpssim.bin -f 1575420000 -s 2600000 -a 0 -x 30
 hackrf_transfer -t gpssim.bin -f 1575420000 -s 2600000 -a 1 -x 30
 
 pip install -U scikit-image
+
+adb shell getevent | grep --line-buffered ^/ | tee /tmp/android-touch-events.log
+awk '{printf "%s %d %d %d\n", substr($1, 1, length($1) -1), strtonum("0x"$2), strtonum("0x"$3), strtonum("0x"$4)}' /tmp/android-touch-events.log | xargs -l adb shell sendevent
+
+adb shell screencap -p | sed 's/\r$//' > screen.png
+
+python -m pip install --upgrade pip
+pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
+adb shell screencap -p | sed 's/\r$//' > screen_"$(date +'%s').png
+
+
+sudo apt-get install --assume-yes build-essential cmake git
+sudo apt-get install --assume-yes build-essential pkg-config unzip ffmpeg qtbase5-dev python-dev python3-dev python-numpy python3-numpy
+sudo apt-get install --assume-yes libopencv-dev libgtk-3-dev libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-dev libtiff5-dev libjasper-dev
+sudo apt-get install --assume-yes libavcodec-dev libavformat-dev libswscale-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install --assume-yes libv4l-dev libtbb-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
+sudo apt-get install --assume-yes libvorbis-dev libxvidcore-dev v4l-utils
+
+cd /usr/include/linux
+ln -s ../libv4l1-videodev.h videodev.h
+mkdir /usr/include/ffmpeg
+cd /usr/include/ffmpeg
+ln -sf /usr/include/x86_64-linux-gnu/libavcodec/*.h ./
+ln -sf /usr/include/x86_64-linux-gnu/libavformat/*.h ./
+ln -sf /usr/include/x86_64-linux-gnu/libswscale/*.h ./
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -DCUDA_NVCC_FLAGS="-D_FORCE_INLINES" ..
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=OFF -D WITH_LIBV4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -DCUDA_NVCC_FLAGS="-D_FORCE_INLINES" ..    
