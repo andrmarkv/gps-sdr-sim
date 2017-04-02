@@ -1,6 +1,8 @@
 ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/016/17n/brdc0160.17n.Z
 ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/brdc/  
 
+mkdir /tmp/ramdisk; chmod 777 /tmp/ramdisk; mount -t tmpfs -o size=526M tmpfs /tmp/ramdisk/; mkfifo /tmp/ramdisk/gpssim.bin
+
 ./gps-sdr-sim -s 2500000 -e brdc3500.16n -l 24.506449,54.372192,111
 
 ./gps-sdr-sim -s 2500000 -e brdc3500.16n -T
@@ -26,7 +28,7 @@ adb shell screencap -p | sed 's/\r$//' > screen.png
 
 python -m pip install --upgrade pip
 pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
-adb shell screencap -p | sed 's/\r$//' > screen_"$(date +'%s').png
+adb shell screencap -p | sed 's/\r$//' > screen_$(date +'%s').png
 
 
 sudo apt-get install --assume-yes build-essential cmake git

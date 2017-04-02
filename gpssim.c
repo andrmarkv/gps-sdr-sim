@@ -2088,7 +2088,8 @@ int main(int argc, char *argv[])
 	//double llh[3] = {48.470909, 35.029497, 111};
 	//double llh[3] = {44.617085, 33.523283, 111};
 	//double llh[3] = {33.592476, -7.620509, 111};
-	double llh[3] = {28.130413, -15.449473, 111};
+	//double llh[3] = {28.130413, -15.449473, 111};
+	double llh[3] = {3.139138, 101.684683, 111};
 
 	double xyz[3] = {0, 0, 0};
 	/* Update global pointer to current location for other threads*/

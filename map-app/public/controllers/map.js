@@ -10,7 +10,8 @@
 //var center = [44.617085, 33.523283]; //Sevastopol
 //var center = [33.592476, -7.620509]; //Casablanka
 //var center = [33.592476, -7.620509]; //Casablanka
-var center = [28.130413, -15.449473]; //Las-Palmas
+//var center = [28.130413, -15.449473]; //Las-Palmas
+var center = [3.139138, 101.684683]; //Kuala Lumpur
 
 
 var curLocation = {
