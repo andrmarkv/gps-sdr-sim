@@ -11,7 +11,8 @@
 //var center = [33.592476, -7.620509]; //Casablanka
 //var center = [33.592476, -7.620509]; //Casablanka
 //var center = [28.130413, -15.449473]; //Las-Palmas
-var center = [3.139138, 101.684683]; //Kuala Lumpur
+//var center = [3.139138, 101.684683]; //Kuala Lumpur
+var center = [48.857688, 2.351384]; //Paris
 
 
 var curLocation = {
