@@ -540,8 +540,10 @@ void eph2sbf(const ephem_t eph, const ionoutc_t ionoutc, unsigned long sbf[5][N_
 	long af1;
 	long af2;
 	long tgd;
+	int svhlth;
+	int codeL2;
 
-	unsigned long ura = 2UL;
+	unsigned long ura = 0UL;
 	unsigned long dataId = 1UL;
 	unsigned long sbf4_page25_svId = 63UL;
 	unsigned long sbf5_page25_svId = 51UL;
@@ -582,6 +584,8 @@ void eph2sbf(const ephem_t eph, const ionoutc_t ionoutc, unsigned long sbf[5][N_
 	af1 = (long)(eph.af1/POW2_M43);
 	af2 = (long)(eph.af2/POW2_M55);
 	tgd = (long)(eph.tgd/POW2_M31);
+	svhlth = (unsigned long)(eph.svhlth);
+	codeL2 = (unsigned long)(eph.codeL2);
 
 	wna = (unsigned long)(eph.toe.week%256);
 	toa = (unsigned long)(eph.toe.sec/4096.0);
@@ -609,7 +613,7 @@ void eph2sbf(const ephem_t eph, const ionoutc_t ionoutc, unsigned long sbf[5][N_
 	// Subframe 1
 	sbf[0][0] = 0x8B0000UL<<6;
 	sbf[0][1] = 0x1UL<<8;
-	sbf[0][2] = ((wn&0x3FFUL)<<20) | (ura<<14) | (((iodc>>8)&0x3UL)<<6);
+	sbf[0][2] = ((wn&0x3FFUL)<<20) | ((codeL2&0x3UL)<<18) | ((ura&0xFUL)<<14) | ((svhlth&0x3FUL)<<8) | (((iodc>>8)&0x3UL)<<6);
 	sbf[0][3] = 0UL;
 	sbf[0][4] = 0UL;
 	sbf[0][5] = 0UL;
@@ -1137,6 +1141,11 @@ int readRinexNavAll(ephem_t eph[][MAX_SAT], ionoutc_t *ionoutc, const char *fnam
 		replaceExpDesignator(tmp, 19);
 		eph[ieph][sv].idot = atof(tmp);
 
+		strncpy(tmp, str+22, 19);
+		tmp[19] = 0;
+		replaceExpDesignator(tmp, 19);
+		eph[ieph][sv].codeL2 = (int)atof(tmp);
+
 		strncpy(tmp, str+41, 19);
 		tmp[19] = 0;
 		replaceExpDesignator(tmp, 19);
@@ -1145,6 +1154,13 @@ int readRinexNavAll(ephem_t eph[][MAX_SAT], ionoutc_t *ionoutc, const char *fnam
 		// BROADCAST ORBIT - 6
 		if (NULL==fgets(str, MAX_CHAR, fp))
 			break;
+
+		strncpy(tmp, str+22, 19);
+		tmp[19] = 0;
+		replaceExpDesignator(tmp, 19);
+		eph[ieph][sv].svhlth = (int)atof(tmp);
+		if ((eph[ieph][sv].svhlth>0) && (eph[ieph][sv].svhlth<32))
+			eph[ieph][sv].svhlth += 32; // Set MSB to 1
 
 		strncpy(tmp, str+41, 19);
 		tmp[19] = 0;
@@ -2076,7 +2092,7 @@ int main(int argc, char *argv[])
 
 
 	// Allocate visible satellites
-	//double llh[3] = {24.506449, 54.372192, 111};
+	double llh[3] = {24.506449, 54.372192, 111};
 	//double llh[3] = {50.393484, 30.516613, 111};
 	//double llh[3] = {48.287776, 25.933566, 111};
 	//double llh[3] = {45.753136, 21.224145, 111};
@@ -2091,7 +2107,7 @@ int main(int argc, char *argv[])
 	//double llh[3] = {28.130413, -15.449473, 111};
 	//double llh[3] = {3.139138, 101.684683, 111};
 	//double llh[3] = {48.857688, 2.351384, 111};
-	double llh[3] = {32.690503, -117.178135, 111};
+	//double llh[3] = {32.690503, -117.178135, 111};
 
 
 	double xyz[3] = {0, 0, 0};
@@ -2207,7 +2223,7 @@ int main(int argc, char *argv[])
 				ant_gain = ant_pat[ibs];
 
 				// Signal gain
-				gain[i] = (int)(path_loss*ant_gain*100.0); // scaled by 100
+				gain[i] = (int)(path_loss*ant_gain*128.0); // scaled by 2^7
 			}
 		}
 
@@ -2225,8 +2241,9 @@ int main(int argc, char *argv[])
 					ip = chan[i].dataBit * chan[i].codeCA * cosTable512[iTable] * gain[i];
 					qp = chan[i].dataBit * chan[i].codeCA * sinTable512[iTable] * gain[i];
 
-					i_acc += (ip + 50)/100;
-					q_acc += (qp + 50)/100;
+					// Accumulate for all visible satellites
+					i_acc += ip;
+					q_acc += qp;
 
 					// Update code phase
 					chan[i].code_phase += chan[i].f_code * delt;
@@ -2265,11 +2282,14 @@ int main(int argc, char *argv[])
 				}
 			}
 
+			// Scaled by 2^7
+			i_acc = (i_acc+64)>>7;
+			q_acc = (q_acc+64)>>7;
+
 			// Store I/Q samples into buffer
 			iq_buff[isamp*2] = (short)i_acc;
 			iq_buff[isamp*2+1] = (short)q_acc;
-
-		} // End of omp parallel for
+		}
 
 		if (data_format==SC01)
 		{
@@ -2292,16 +2312,7 @@ int main(int argc, char *argv[])
 		} 
 		else // data_format==SC16
 		{
-			/*
-			for (isamp=0; isamp<2*iq_buff_size; isamp++)
-				iq_buff[isamp] = iq_buff[isamp]>0?1000:-1000; // Emulated 1-bit I/Q
-			*/
 			fwrite(iq_buff, 2, 2*iq_buff_size, fp);
-
-//			hexDump("DUMP", iq_buff, 2);
-//			if (count == 100) {
-//				break;
-//			}
 		}
 
 		//
@@ -2309,13 +2320,6 @@ int main(int argc, char *argv[])
 		//
 
 		igrx = (int)(grx.sec*10.0+0.5);
-
-//		if (igrx%10==0){
-//			xyz2llh_decimal(xyz, llh);
-//			printf("Time into run = %4.1f, current location: lat %lf lon %lf h %lf\n",
-//					subGpsTime(grx, g0), llh[0], llh[1], llh[2]);
-//		}
-
 
 		if (igrx%300==0) // Every 30 seconds
 		{
@@ -2340,11 +2344,11 @@ int main(int argc, char *argv[])
 						for (i=0; i<MAX_CHAN; i++)
 						{
 							// Generate new subframes if allocated
-							if (chan[i].prn!=0)
+							if (chan[i].prn!=0) 
 								eph2sbf(eph[ieph][chan[i].prn-1], ionoutc, chan[i].sbf);
 						}
 					}
-
+						
 					break;
 				}
 			}
