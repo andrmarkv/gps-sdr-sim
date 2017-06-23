@@ -1,4 +1,4 @@
-# Makefile for Linux etc.
+	# Makefile for Linux etc.
 
 .PHONY: all clean time
 all: gps-sdr-sim
@@ -16,3 +16,8 @@ clean:
 	#rm *.bin
 	#mkfifo gpssim.bin
 
+run_hack:
+	day=$(shell date +%j)
+	year=$(shell date +%Y)
+	y=$(shell date +%y)
+	wget ftp://cddis.gsfc.nasa.gov/gnss/data/daily/${year}/${day}/${y}n/brdc${day}0.${y}n.Z

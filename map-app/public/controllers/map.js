@@ -13,7 +13,8 @@
 //var center = [28.130413, -15.449473]; //Las-Palmas
 //var center = [3.139138, 101.684683]; //Kuala Lumpur
 //var center = [48.857688, 2.351384]; //Paris
-var center = [32.690503, -117.178135]; //Colorado
+//var center = [32.690503, -117.178135]; //Colorado
+var center = [40.671249, -74.074435]; //New York
 
 
 var curLocation = {
@@ -70,7 +71,7 @@ var gotOK = false; // Indicator of confirmation to proceed to the next interval
 //To handle state changes from moving to stopped and back
 var curState = 0; //0 - stopped, 1 - moving
 
-var myapp = angular.module('appMaps', [ 'uiGmapgoogle-maps', 'simpleGrid' ]);
+var myapp = angular.module('appMaps', ['uiGmapgoogle-maps']);
 
 myapp.config(function(uiGmapGoogleMapApiProvider) {
 	uiGmapGoogleMapApiProvider.configure({
@@ -117,32 +118,6 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 	
 	$scope.markers = []; //markers to shows loaded locations
 
-	$scope.myGridConfig = {
-		// should return your data (an array)
-		getData : function() {
-			return $scope.myPath;
-		},
-
-		options : {
-			"showDeleteButton": true,
-			"dynamicColumns": true,
-			rowDeleted: function (row) {alert(row) },
-			columns : [ {
-				field : 'tag',
-			}, {
-				field : 'latitude'
-			}, {
-				field : 'longitude'
-			}, {
-				field : 'speed',
-				inputType : 'number'
-			}, {
-				field : 'pause',
-				inputType : 'number'
-			}]
-		}
-	}
-	
 	socket.on('gpsUpdate', function(data) {
 		// console.log(data.latitude + " " + data.longitude);
 		stateChanged = false; //indicates state change
@@ -321,16 +296,6 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			speed : 10000,
 			pause : 0,
 		});
-	};
-	
-	$scope.showHideTable = function() {
-		if (document.getElementById('grid-container-div').style.display == 'none') {
-			document.getElementById('grid-container-div').style.display = 'inline';
-			document.getElementById('show-hide').innerHTML = 'Hide'
-		} else {
-			document.getElementById('grid-container-div').style.display = 'none';
-			document.getElementById('show-hide').innerHTML = 'Show'
-		}
 	};
 	
 	$scope.addLocation = function() {
@@ -557,8 +522,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			longitude0 : lon0,
 			latitude1 : lat1,
 			longitude1 : lon1,
-			speed : speed,
-			pause : pause,
+			speed : $scope.moveControl.speed,
+			pause : $scope.moveControl.speed,
 		});
 		
 		isReplayRunning = true;
@@ -617,8 +582,8 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				longitude0 : lon0,
 				latitude1 : lat1,
 				longitude1 : lon1,
-				speed : speed,
-				pause : pause,
+				speed : $scope.moveControl.speed,
+				pause : $scope.moveControl.speed,
 			});
 			
 		}, pause * 1000);

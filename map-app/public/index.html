@@ -83,9 +83,6 @@
 	<!--     This section is for the grid -->
 	<script type="text/ng-template" id="simple-grid.html" src="templates/simple-grid.html"></script>
 	<div class="grid-visibility-control">
-		 <a id="show-hide" ng-click="showHideTable()">
-		 	<img title="Hide Panel" src="img/hide.svg" width="24" height="24">
-		 </a>
 		 <a ng-click="addLocation()">
 		 	<img title="Add Point to Motion Path" src="img/add.svg" width="24" height="24">
 		 </a>
@@ -104,13 +101,10 @@
 		 <input type="checkbox" ng-model="isRepeat" title="Repeat Replay" checked>Repeat</input>
 		 <input type="checkbox" ng-model="isControlled" title="Is next step controlled by event" checked>Controlled</input>
 	</div>
-	<div id="grid-container-div" class="grid-container">
-		<div simple-grid="myGridConfig"></div>
-		<div class="grid-totals">
-			<a href="#" ng-click="calcTotals()">Calculate</a>
-			Total Length: {{tl | number:0}} (m)
-			Total Time: {{tt | number:0}} (sec)
-		</div>
+	<div class="grid-totals">
+		<a href="#" ng-click="calcTotals()">Calculate</a>
+		Total Length: {{tl | number:0}} (m)
+		Total Time: {{tt | number:0}} (sec)
 	</div>
 </div>
 

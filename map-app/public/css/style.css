@@ -28,6 +28,17 @@ html, body, #map_canvas {
 	text-align: center;
 }
 
+.grid-visibility-control {
+	background-color: rgba(110, 230, 240, 0.3) !important;
+	width: 400px;
+	height: 30px;
+	position: absolute;
+	top: 10px;
+	left: 800px;
+	z-index: 99;
+	text-align: justify;
+}
+
 .md-block {
 	margin-top: 3px;
 	margin-left: 10px;
@@ -104,14 +115,4 @@ code {
 	margin: 0;
 }
 
-.grid-visibility-control {
-	background-color: rgba(110, 230, 240, 0.3) !important;
-	width: 400px;
-	height: 30px;
-	position: absolute;
-	top: 80px;
-	left: 10px;
-	z-index: 99;
-	text-align: justify;
-}
 
