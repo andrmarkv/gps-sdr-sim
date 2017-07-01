@@ -139,7 +139,5 @@ function processControl(message){
 		io.emit('controlRelese', { state: arr[2]});
 	}
 	
-//	console.log("processControl msg: " + msg);
-//	console.log("processControl msg.state: " + msg.state);
-
+	console.log("processControl response msg: " + msg);
 }

@@ -2092,7 +2092,7 @@ int main(int argc, char *argv[])
 
 
 	// Allocate visible satellites
-	double llh[3] = {24.506449, 54.372192, 111};
+	double llh[3] = {24.480085, 54.346342, 111};
 	//double llh[3] = {50.393484, 30.516613, 111};
 	//double llh[3] = {48.287776, 25.933566, 111};
 	//double llh[3] = {45.753136, 21.224145, 111};
@@ -2108,6 +2108,7 @@ int main(int argc, char *argv[])
 	//double llh[3] = {3.139138, 101.684683, 111};
 	//double llh[3] = {48.857688, 2.351384, 111};
 	//double llh[3] = {32.690503, -117.178135, 111};
+	//double llh[3] = {40.766585, -73.981467, 111};
 
 
 	double xyz[3] = {0, 0, 0};

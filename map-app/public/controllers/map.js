@@ -1,5 +1,5 @@
 //var center = [48.287776, 25.933566]; //Chernivtsi
-//var center = [24.480085, 54.346342]; //Abu Dhabi
+var center = [24.480085, 54.346342]; //Abu Dhabi
 //var center = [45.753136, 21.224145]; //Timisuary
 //var center = [38.328938, -76.465785]; //Solomons Island
 //var center = [48.868279, 24.697502]; //Ivano Frankovsk
@@ -14,7 +14,7 @@
 //var center = [3.139138, 101.684683]; //Kuala Lumpur
 //var center = [48.857688, 2.351384]; //Paris
 //var center = [32.690503, -117.178135]; //Colorado
-var center = [40.671249, -74.074435]; //New York
+//var center = [40.766585, -73.981467]; //New York
 
 
 var curLocation = {
