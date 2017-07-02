@@ -1,5 +1,5 @@
 //var center = [48.287776, 25.933566]; //Chernivtsi
-var center = [24.480085, 54.346342]; //Abu Dhabi
+var center = [24.496861, 54.362925]; //Abu Dhabi
 //var center = [45.753136, 21.224145]; //Timisuary
 //var center = [38.328938, -76.465785]; //Solomons Island
 //var center = [48.868279, 24.697502]; //Ivano Frankovsk
