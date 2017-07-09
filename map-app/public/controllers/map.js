@@ -553,14 +553,14 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 			lat1 = $scope.myPath[0].latitude;
 			lon1 = $scope.myPath[0].longitude;
 			speed = $scope.myPath[currentPathIndex].speed;
-			pause = $scope.myPath[currentPathIndex].pause;
+			pause = $scope.moveControl.pause;
 			tag = $scope.myPath[currentPathIndex].tag;
 			currentPathIndex = 0;
 		} else {
 			lat1 = $scope.myPath[currentPathIndex + 1].latitude;
 			lon1 = $scope.myPath[currentPathIndex + 1].longitude;
 			speed = $scope.myPath[currentPathIndex].speed;
-			pause = $scope.myPath[currentPathIndex].pause;
+			pause = $scope.moveControl.pause;
 			tag = $scope.myPath[currentPathIndex].tag;
 			currentPathIndex = currentPathIndex + 1;
 		}
@@ -583,7 +583,7 @@ myapp.controller('mainCtrl', function($scope, uiGmapGoogleMapApi) {
 				latitude1 : lat1,
 				longitude1 : lon1,
 				speed : $scope.moveControl.speed,
-				pause : $scope.moveControl.speed,
+				pause : $scope.moveControl.pause,
 			});
 			
 		}, pause * 1000);
