@@ -111,6 +111,11 @@ io.on('connection', function (socket) {
 	  sendUDPControlMessage("CONTROL;" + msg);
   });
   
+  socket.on('controlWaiting', function (data) {
+	  var msg = data.tag + ";" + data.latitude + ";" + data.longitude
+	  sendUDPControlMessage("WAITING;" + msg);
+  });
+  
 });
 
 function processCurLocation(message){
