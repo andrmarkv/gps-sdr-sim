@@ -1,6 +1,6 @@
 //var center = [48.287776, 25.933566]; //Chernivtsi
 //var center = [24.496861, 54.362925]; //Abu Dhabi
-var center = [25.074804, 55.131207]; //Dubai Marina
+//var center = [25.074804, 55.131207]; //Dubai Marina
 //var center = [45.753136, 21.224145]; //Timisuary
 //var center = [38.328938, -76.465785]; //Solomons Island
 //var center = [48.868279, 24.697502]; //Ivano Frankovsk
@@ -17,8 +17,10 @@ var center = [25.074804, 55.131207]; //Dubai Marina
 //var center = [32.690503, -117.178135]; //Colorado
 //var center = [40.766585, -73.981467]; //New York
 //var center = [41.910433, 12.471167]; //Rome
-//var center = [41.868706, -87.623502]; //Chicago
+var center = [41.868706, -87.623502]; //Chicago
 //var center = [35.442876, 139.649201]; //Japan Yokohama Park
+//var center = [51.507550, -0.110358]; //London
+
 
 var curLocation = {
 	coords : {
