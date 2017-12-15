@@ -20,6 +20,7 @@
 var center = [41.868706, -87.623502]; //Chicago
 //var center = [35.442876, 139.649201]; //Japan Yokohama Park
 //var center = [51.507550, -0.110358]; //London
+//var center = [35.543715, 134.233546]; //Tottori Sand Dunes
 
 
 var curLocation = {
