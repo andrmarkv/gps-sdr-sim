@@ -636,7 +636,7 @@ void* start_udp_server(void *arg) {
 		n = recvfrom(sockfd, buf, BUFSIZE, 0, (struct sockaddr *) &clientaddr,
 				&clientlen);
 
-		printf("TEST 1\n");
+		fprintf(stderr, "Got message: %s", buf);
 
 		if (n < 0)
 			error("ERROR in recvfrom");
@@ -647,16 +647,12 @@ void* start_udp_server(void *arg) {
 		//hostp = gethostbyaddr((const char *) &clientaddr.sin_addr.s_addr,
 		//		sizeof(clientaddr.sin_addr.s_addr), AF_INET);
 
-		printf("TEST 2\n");
-
 		//if (hostp == NULL)
 		//	error("ERROR on gethostbyaddr");
 
 		hostaddrp = inet_ntoa(clientaddr.sin_addr);
 		if (hostaddrp == NULL)
 			error("ERROR on inet_ntoa\n");
-
-		printf("TEST 3\n");
 
 //		printf("server received %Zu/%d bytes, from %s, data: %s\n", strlen(buf),
 //				n, hostaddrp, buf);

@@ -1,15 +1,12 @@
 ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/016/17n/brdc0160.17n.Z
 ftp://cddis.gsfc.nasa.gov/gnss/data/daily/2017/brdc/  
 
-mkdir /tmp/ramdisk; chmod 777 /tmp/ramdisk; mount -t tmpfs -o size=526M tmpfs /tmp/ramdisk/; mkfifo /tmp/ramdisk/gpssim.bin
+mkdir /tmp/ramdisk; chmod 777 /tmp/ramdisk; mount -t tmpfs -o size=526M tmpfs /tmp/ramdisk/; mkfifo /tmp/ramdisk/gpssim.bin; chmod a+rw /tmp/ramdisk/gpssim.bin
 
-./gps-sdr-sim -s 2500000 -e brdc3500.16n -l 24.506449,54.372192,111
-
-./gps-sdr-sim -s 2500000 -e brdc3500.16n -T
+./gps-sdr-sim -s 2500000 -e brdc3050.16n -T now
 
 ./gps-sdr-sim -s 2500000 -e brdc3500.16n -t 2016/12/15,12:00:00
 
-./gps-sdr-sim -s 2500000 -e brdc0400.17n -t 2017/02/09,12:00:00
 /usr/lib/uhd/examples/tx_samples_from_file --args="master_clock_rate=50e6" --file gpssim.bin --type short --rate 2500000 --freq 1575420000 --gain 45
 
 #For HackRF
