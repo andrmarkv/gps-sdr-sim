@@ -1909,6 +1909,9 @@ int main(int argc, char *argv[])
 			llh[1] = motion_current->llh[1];
 			llh[2] = motion_current->llh[2];
 
+			/* Delete all this path and free memory */
+			del_motion_path(motion_current);
+
 			printf("Got location to start simulation: lat %lf lon %lf h %lf\n",
 										llh[0], llh[1], llh[2]);
 		}

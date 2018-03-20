@@ -91,7 +91,10 @@ myapp.controller("TimerController", function($scope, $interval) {
 
 function callAtTimeout() {
 	// console.log("Timeout occurred 1 " + curLocation.coords.latitude);
-	socket.emit('getCurLocation', {});
+	socket.emit('getCurLocation', {
+		marker_latitude: markerLocation.coords.latitude,
+		marker_longitude: markerLocation.coords.longitude,
+	});
 }
 
 function sendControlMessage(tag, lat, lon) {

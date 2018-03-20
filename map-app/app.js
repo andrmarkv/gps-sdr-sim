@@ -102,7 +102,9 @@ io.on('connection', function (socket) {
   });
   
   socket.on('getCurLocation', function (data) {
-	  sendUDPMessage("CUR_LOC");
+	  //console.log("got getCurLocation event: %j", data);
+	  var msg = data.marker_latitude + ";" + data.marker_longitude
+	  sendUDPMessage("CUR_LOC;" + msg);
   });
   
   socket.on('startControl', function (data) {

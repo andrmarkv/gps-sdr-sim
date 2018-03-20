@@ -1,36 +1,3 @@
-/*
- * Copyright (c) 1987, 1993, 1994
- *      The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *      This product includes software developed by the University of
- *      California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
 #include "path_generator.h"
 #include "cqueue.h"
 
@@ -506,6 +473,7 @@ void clear_pending_movements() {
 int process_message(char* buf, char* msg_back) {
 	int pos = 0;
 	int res = 0;
+	char *token;
 
 	/* If that is new path message - add it to the queue and return OK*/
 	pos = findsbstr(buf, "PATH");
@@ -534,6 +502,36 @@ int process_message(char* buf, char* msg_back) {
 	/* If that is get location message - return current location*/
 	pos = findsbstr(buf, "CUR_LOC");
 	if (pos == 0) {
+
+		//Threat CUR_LOC message as set initial location message if it has coordinates but cur_loc is not set
+		if (cur_loc.llh[0] == 0 && cur_loc.llh[1] == 0 && cur_loc.llh[2] == 0){
+			int i = 0;
+
+			//Parse message and get coordinates
+			while ((token = strsep(&buf, ";"))){
+				switch(i){
+					case 0:
+						break;
+					case 1:
+						cur_loc.llh[0] = atof(token);
+						break;
+					case 2:
+						cur_loc.llh[1] = atof(token);
+						break;
+				}
+				i++;
+			}
+
+			//Define motion
+			if(cur_loc.llh[0] != 0 && cur_loc.llh[1] != 0){
+				t_motion *motion = calc_motion(cur_loc.llh[0], cur_loc.llh[1], cur_loc.llh[0], cur_loc.llh[1], 1);
+				add_motion_path(motion);
+			}
+
+		}
+
+		printf(msg_back, "CUR_LOC message: %lf;%lf;%lf", cur_loc.llh[0],
+						cur_loc.llh[1], cur_loc.llh[2]);
 		//Different messages based on the fact if we finished motion or not
 		if(get_stop_flag()){
 			sprintf(msg_back, "%s;%lf;%lf;%lf;STOPPED", "LOCATION", cur_loc.llh[0],
@@ -636,7 +634,7 @@ void* start_udp_server(void *arg) {
 		n = recvfrom(sockfd, buf, BUFSIZE, 0, (struct sockaddr *) &clientaddr,
 				&clientlen);
 
-		fprintf(stderr, "Got message: %s", buf);
+		fprintf(stderr, "\nGot message: %s\n", buf);
 
 		if (n < 0)
 			error("ERROR in recvfrom");
