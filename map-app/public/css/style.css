@@ -115,4 +115,18 @@ code {
 	margin: 0;
 }
 
+.mapdiv {
+    position:fixed;
+    width:100%;
+    height:100vh;
+    left:0px;
+    top:0px;
+    z-index: 1;
+}
+
+.map-wrap {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
